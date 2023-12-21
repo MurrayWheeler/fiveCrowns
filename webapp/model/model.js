@@ -35,20 +35,20 @@ fiveCrowns.model = (function () {
 
 
 
-    // /**
-    //  * Add prize winnings and increment division wins
-    //  */
-    // function addWinnings(ticket, division) {
-    //     ticket.winnings = ticket.winnings + divPrize[division];
-    //     // Output winnings in currecny format
-    //     ticket.winningsOutput = ticket.winnings.toLocaleString('en-NZ', { style: 'currency', currency: 'NZD' });
-    //     ticket.division[division] = ticket.division[division] + 1;
-    //     ticket.div5 = ticket.division[0];
-    //     ticket.div4 = ticket.division[1];
-    //     ticket.div3 = ticket.division[2];
-    //     ticket.div2 = ticket.division[3];
-    //     ticket.div1 = ticket.division[4];
-    // };
+    /**
+     * Add prize winnings and increment division wins
+     */
+    function addWinnings(ticket, division) {
+        ticket.winnings = ticket.winnings + divPrize[division];
+        // Output winnings in currecny format
+        ticket.winningsOutput = ticket.winnings.toLocaleString('en-NZ', { style: 'currency', currency: 'NZD' });
+        ticket.division[division] = ticket.division[division] + 1;
+        ticket.div5 = ticket.division[0];
+        ticket.div4 = ticket.division[1];
+        ticket.div3 = ticket.division[2];
+        ticket.div2 = ticket.division[3];
+        ticket.div1 = ticket.division[4];
+    };
 
 
     // /**
@@ -164,7 +164,7 @@ fiveCrowns.model = (function () {
 
 
 
-    // return {
+    return {
 
 
     //     /**
