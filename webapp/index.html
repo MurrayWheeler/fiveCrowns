@@ -6,18 +6,15 @@
   <meta charset="UTF-8">
   <title>Five Crowns</title>
 
-  <!-- The easiest way to include some third-party code is simply putting it into the index.html, just like you would do on any non-UI5 web page. The only thing, you need to keep in mind here, is that you probably want to initialize your code after UI5 has been loaded. To do this, attach your code to the init event of by wrapping it in sap.ui.getCore().attachInit() like this:
-  -->
-
-  <!--  <script language="javascript" src="path/to/YourLib.js"></script>
-  -->
+  <!-- The easiest way to include some third-party code is simply putting it into the index.html, just like you would do on any non-UI5 web page. The only thing, you need to keep in mind here, is that you probably want to initialize your code after UI5 has been loaded. To do this, attach your code to the init event of by wrapping it in sap.ui.getCore().attachInit() like this: -->
+  <!--  <script language="javascript" src="path/to/YourLib.js"></script>  -->
 
 
   <script src="model/model.js"></script>
   <script src="controller/controller.js"></script>
-<!--  <script src="view/page1View.js"></script>
-  <script src="view/page2View.js"></script>
--->
+  <script src="view/pageMainView.js"></script>
+  <script src="view/pageGameView.js"></script>
+  <script src="view/pageGamesView.js"></script>
 
   <script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
     data-sap-ui-libs="sap.m" data-sap-ui-theme="sap_belize" data-sap-ui-compatVersion="edge"
@@ -33,20 +30,15 @@
 //      fiveCrowns.model.setModel(oModel);
 
       // Initialize layout
-//      var app = new sap.m.App("myApp", { initialPage: "page1" });
-//      fiveCrowns.page1View.layout(app);
-//      fiveCrowns.page2View.layout(app);
-//      app.placeAt("content");
+      var app = new sap.m.App("myApp", { initialPage: "pageMain" });
+      fiveCrowns.pageMainView.layout(app);
+      fiveCrowns.pageGameView.layout(app);
+      fiveCrowns.pageGamesView.layout(app);
+      app.placeAt("content");
 
-    });
-//        sap.ui.require(...)
-//      });
+});
 
-//      sap.ui.getCore().attachInit(function () {
-//        // Initialize your external libraries here, just the way you would do without UI5
-//      });
-            // initialize the ushell sandbox component
-  </script>
+</script>
 
 </head>
 
