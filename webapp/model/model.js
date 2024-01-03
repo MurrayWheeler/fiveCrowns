@@ -1,355 +1,373 @@
 "use-strict";
 
-
-
 var fiveCrowns = {};
 
 fiveCrowns.model = (function () {
 
-    const maxPlayers = 6;
+    const maxPlayers = 8;
+    const maxRounds = 11;
+    const playerPrefix = "P";
 
-    // // Number of lines per ticket and numbers per line, to generate per ticket
-    // // For methods LRU, Least, MRU & Most, the ticket lines need to be <= to tLayout lines.
-    // const ticketLines = 12;
-    // const lineNumbers = 6;
+    // var oPlayer = new Object;
+    // var aPlayers = new Array;
+    var oGame = new Object;
+    var oReorder = { players: [{ playerPosition: 0, playerName: '' }] };
+    var oChangeDealer = { players: [{ selected: false, playerName: '' }] };
 
-    // // Maximum number of balls in the draw
-    // // If this changes, also change LRU list and Count list
-    // const maxNumber = 40;
+    // Constructor function for Game object
+    function Game(gameName) {
 
-    // // Average expect prize value per division
-    // const divPrize = [20, 35, 670, 8500, 717840];
+        // Properties
+        // ====================================================
+        this.gameId = 1;
+        this.gameDate = new Date();
+        this.gameName = this.gameDate.toString().substring(0, 24);
+        this.initialDealer = 0;     // Array index. IE zero is the first player
+        this.currentDealer = 0;            // Array index
+        this.currentRound = 0;      // Array index
+        this.playerCount = 0;
+        this.players = new Array;
+        for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+            this.players.push({
+                playerPosition: playerNum + 1,
+                playerId: 0, 
+                playerName: '', 
+                // playerName: defaultPlayerName(playerNum),
+                r0: '', r1: '', r2: '', r3: '', r4: '', r5: '', r6: '', r7: '', r8: '', r9: '', r10: ''
+            });
+        };
+        // Scores: 11 rounds x 8 players
+        this.rounds = new Array;
+        for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
+            roundName = getRoundName(roundNum);
+            this.rounds.push({ round: roundName, s0: '', s1: '', s2: '', s3: '', s4: '', s5: '', s6: '', s7: '' });
+        };
+        // Scores: 11 rounds x 8 players
+        this.scores = new Array;
+        for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
+            roundScores = new Array;
+            for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+                roundScores.push('');
+            };
+            this.scores.push({ roundScores: roundScores });
+        };
 
-    // // Array for LRU (& MRU) numbers
-    // var lruList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    //     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
-
-    // // Array for count of how many time each number is used
-    // // Note, index 0 is not used
-    // var countList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    //     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    // var tickets = new Array;
-    // var oTickets = {};
-    // var draw = new Object;
+        this.totals = new Array;
+        for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+            this.totals.push(0);
+        };
 
 
+        // Methods
+        // ====================================================
 
-    /**
-     * Add prize winnings and increment division wins
-     */
-    function addWinnings(ticket, division) {
-        ticket.winnings = ticket.winnings + divPrize[division];
-        // Output winnings in currecny format
-        ticket.winningsOutput = ticket.winnings.toLocaleString('en-NZ', { style: 'currency', currency: 'NZD' });
-        ticket.division[division] = ticket.division[division] + 1;
-        ticket.div5 = ticket.division[0];
-        ticket.div4 = ticket.division[1];
-        ticket.div3 = ticket.division[2];
-        ticket.div2 = ticket.division[3];
-        ticket.div1 = ticket.division[4];
+        // Set game name
+        this.setGameName = function (gameName) {
+            this.gameName = gameName;
+        }
+
+        // Set player name
+        this.setPlayerName = function (player, playerName) {
+            thisPlayer = this.players[player];
+            thisPlayer.playerName = playerName;
+        }
+
+        // Set current round
+        this.setCurrentRound = function (roundNum) {
+            this.currentRound = roundNum;
+        }
+
+        // Get current round
+        this.getCurrentRound = function () {
+            return this.currentRound;
+        }
+
+        // Set score
+        this.setScore = function (round, player, score) {
+            thisRound = this.scores[round];
+            thisRound.roundScores[player] = score;
+            this.setStaticScore(round, player);
+        };
+
+        // Set score
+        this.setStaticScore = function (roundNum, playerNum) {
+            var thisScores = this.scores[roundNum];
+            var score = thisScores.roundScores[playerNum];
+            var thisRound = this.rounds[roundNum];
+            var thisPlayer = this.players[playerNum];
+            switch (playerNum) {
+                case 0: thisRound.s0 = score; break;
+                case 1: thisRound.s1 = score; break;
+                case 2: thisRound.s2 = score; break;
+                case 3: thisRound.s3 = score; break;
+                case 4: thisRound.s4 = score; break;
+                case 5: thisRound.s5 = score; break;
+                case 6: thisRound.s6 = score; break;
+                case 7: thisRound.s7 = score; break;
+                default:
+            }
+            switch (roundNum) {
+                case 0: thisPlayer.r0 = score; break;
+                case 1: thisPlayer.r1 = score; break;
+                case 2: thisPlayer.r2 = score; break;
+                case 3: thisPlayer.r3 = score; break;
+                case 4: thisPlayer.r4 = score; break;
+                case 5: thisPlayer.r5 = score; break;
+                case 6: thisPlayer.r6 = score; break;
+                case 7: thisPlayer.r7 = score; break;
+                case 8: thisPlayer.r8 = score; break;
+                case 9: thisPlayer.r9 = score; break;
+                case 10: thisPlayer.r10 = score; break;
+                default:
+            }
+        };
+
+        // Set static score
+        this.setStaticScores = function () {
+            for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
+                for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+                    this.setStaticScore(roundNum, playerNum);
+                };
+            };
+        };
+
+        this.setInitialDealer = function (initialDealer) {
+            oGame.initialDealer = initialDealer;
+        };
+
+        this.setCurrentDealer = function (currentDealer) {
+            oGame.currentDealer = currentDealer;
+        };
+
+
+
     };
 
 
-    // /**
-    //  * Check line
-    //  */
-    // function checkLine(line, ticket) {
 
-    //     var matches = 0;     // Number of matching numbers
-    //     var bonus = false;   // Did we have the bonus number
+    // Get round name
+    function getRoundName(roundNum) {
+        if (roundNum <= 7) {
+            roundNumText = roundNum + 3;
+            // roundName = 'Rnd' + roundNumText;
+            roundName = roundNumText;
+        } else {
+            switch (roundNum) {
+                case 8: roundName = 'Jack'; break;
+                case 9: roundName = 'Queen'; break;
+                case 10: roundName = 'King'; break;
+                default:
+            };
+        };
+        return roundName;
+    }
 
-    //     // Do we have the bonus number
-    //     if (line.includes(draw.bonus)) {
-    //         bonus = true;
-    //     }
-    //     // Loop through each number of the draw, do we have it
-    //     for (let i = 0; i < draw.line.length; i++) {
-    //         if (line.includes(draw.line[i])) {
-    //             matches = matches + 1;
-    //         }
-    //     }
+    /**
+     * Create game
+     */
+    function createGame() {
+        oGame = new Game();
+    };
 
-    //     // Check how much we won and which division
-    //     if (matches == 3 && bonus == true) {
-    //         addWinnings(ticket, 0);
-    //     } else {
-    //         if (matches == 4) {
-    //             addWinnings(ticket, 1);
-    //         } else {
-    //             if (matches == 5) {
-    //                 addWinnings(ticket, 2);
-    //             } else {
-    //                 if (matches == 5 && bonus == true) {
-    //                     addWinnings(ticket, 3);
-    //                 } else {
-    //                     if (matches == 6) {
-    //                         addWinnings(ticket, 4);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     };
+    function clearTotals() {
+        for (let playerNum = 0; playerNum < oGame.totals.length; playerNum++) {
+            oGame.totals[playerNum] = 0;
+        }
+    };
 
-    // };
+    function defaultPlayerName(playerNum) {
+        var playerNumber = playerNum + 1;
+        var playerName = playerPrefix + playerNumber;
+        return playerName;
+    };
 
-
-    // /**
-    //  * Check ticket
-    //  */
-    // function checkTicket(ticket) {
-    //     for (let line = 0; line < ticket.lines.length; line++) {
-    //         checkLine(ticket.lines[line], ticket);
-    //     }
-    // };
-
-
-    // /**
-    //  * Generate bonus ball
-    //  */
-    // function generateBonus(line) {
-
-    //     var bonus = 0;
-
-    //     while (bonus == 0) {   // Generate bonus number that is unique
-    //         // Generate a number
-    //         var newNumber = Math.floor((Math.random() * fiveCrowns.model.getMaxNumber())) + 1;
-    //         // Now check for a duplicate in previous numbers
-    //         if (line.includes(newNumber)) {
-    //             continue;
-    //         }
-    //         bonus = newNumber;
-    //     }
-    //     return bonus;
-    // };
-
-
-    // /**
-    //  * Update the Least Recently Used list
-    //  */
-    // function updateLruList(line, bonus) {
-
-    //     // When a number is drawn, move it to the back of the list
-    //     // 1) Find number in list
-    //     // 2) Shuffle forward all subsequent numbers
-    //     // 3) Place number at end of list 
-    //     for (let i = 0; i < line.length; i++) {
-    //         let num = line[i];
-    //         let pos = lruList.indexOf(num);
-    //         lruList.splice(pos, 1);
-    //         lruList.push(num);
-    //     }
-    //     // Repeat for the bonus ball
-    //     let pos = lruList.indexOf(bonus);
-    //     lruList.splice(pos, 1);
-    //     lruList.push(bonus);
-
-    // };
+    function updatePlayerPositions() {
+        for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+            oGame.players[playerNum].playerPosition = playerNum + 1;
+        };
+    };
 
 
 
-    // /**
-    //  * Update the count of numbers used
-    //  */
-    // function updateCountList(line, bonus) {
+    function createTestData() {
+        // Testing
+        oGame = fiveCrowns.model.getModel();
+        oGame.setGameName("Saturday");
+        oGame.setPlayerName(0, "Murray");
+        oGame.setPlayerName(1, "Austin");
+        oGame.setPlayerName(2, "Diane");
+        oGame.setPlayerName(3, "Kay");
+        // oGame.setScore(0, 0, 3);
+        // oGame.setScore(0, 1, 6);
+        // oGame.setScore(0, 2, 9);
+        // oGame.setScore(1, 0, 4);
+        // oGame.setScore(1, 1, 7);
+        // oGame.setScore(1, 2, 0);
+        // oGame.setScore(2, 0, 5);
+        // oGame.setScore(2, 1, 8);
+        // oGame.setScore(2, 2, 1);
 
-    //     // Note, index 0 is not used
-    //     for (let i = 0; i < line.length; i++) {
-    //         countList[line[i]] = countList[line[i]] + 1;
-    //     }
-    //     // Also add the bonus ball
-    //     countList[bonus] = countList[bonus] + 1;
+    };
 
-    // };
 
 
 
     return {
 
 
-    //     /**
-    //      * Get tLayout
-    //      */
-    //     getLayout: function () {
-    //         return tLayout;
-    //     },
+        /**
+         * Initialise model
+         */
+        init: function () {
+            fiveCrowns.settings.initSettings();
+            createGame();
+            createTestData();
+        },
+
+        /**
+         * Set model
+         */
+        setModel: function (oModel) {
+            oGame = oModel;
+        },
+
+        /**
+         * Get model
+         */
+        getModel: function () {
+            return oGame;
+        },
+
+        /**
+         * Set reorder model
+         */
+        setReorderModel: function (oModel) {
+            oReorder = oModel;
+        },
+
+        /**
+         * Get reorder model
+         */
+        getReorderModel: function () {
+            return oReorder;
+        },
+
+        /**
+         * Set change dealer model
+         */
+        setChangeDealerModel: function (oModel) {
+            oChangeDealer = oModel;
+        },
+
+        /**
+         * Get change dealer model
+         */
+        getChangeDealerModel: function () {
+            return oChangeDealer;
+        },
+
+        /**
+         * Get max players
+         */
+        getMaxPlayers: function () {
+            return maxPlayers;
+        },
+
+        /**
+         * Get max rounds
+         */
+        getMaxRounds: function () {
+            return maxRounds;
+        },
+
+        /**
+         * Get player count
+         */
+        getPlayerCount: function () {
+            return oGame.playerCount;
+        },
+
+        /**
+         * Set player count
+         */
+        setPlayerCount: function (players) {
+            oGame.playerCount = Number(players);
+            if (oGame.playerCount < 0) oGame.playerCount = 0;
+            if (oGame.playerCount > maxPlayers) oGame.playerCount = maxPlayers;
+        },
+
+        /**
+         * Get default player name
+         */
+        getDefaultPlayerName: function (playerNum) {
+            return defaultPlayerName(playerNum);
+        },
 
 
-    //     /**
-    //      * Get ticket lines
-    //      */
-    //     getTicketLines: function () {
-    //         return ticketLines;
-    //     },
-
-
-    //     /**
-    //      * Get line numbers
-    //      */
-    //     getLineNumbers: function () {
-    //         return lineNumbers;
-    //     },
-
-
-    //     /**
-    //      * Get largest number
-    //      */
-    //     getMaxNumber: function () {
-    //         return maxNumber;
-    //     },
-
-
-    //     /**
-    //      * Get LRU List
-    //      */
-    //     getLruList: function () {
-    //         return lruList;
-    //     },
-
-
-    //     /**
-    //      * Get Count List
-    //      */
-    //     getCountList: function () {
-    //         return countList;
-    //     },
-
-
-    //     /**
-    //      * Get Tickets
-    //      */
-    //     getTickets: function () {
-    //         return tickets;
-    //     },
-
-
-
-    //     /**
-    //      * Generate line (random)
-    //      */
-    //     generateRandomLine: function () {
-
-    //         var line = new Array;
-    //         var cIndex = 0;       // current index
-    //         while (cIndex < fiveCrowns.model.getLineNumbers()) {   // Loop until we have all numbers
-    //             // Generate a number
-    //             var newNumber = Math.floor((Math.random() * fiveCrowns.model.getMaxNumber())) + 1;
-    //             // Now check for a duplicate in previous numbers
-    //             if (line.includes(newNumber)) {
-    //                 continue;
-    //             };
-    //             line[cIndex] = newNumber;
-    //             cIndex = cIndex + 1;
-    //         }
-
-    //         return line;
-    //     },
-
-
-
-    //     /**
-    //      * Generate result (random)
-    //      */
-    //     generateResult: function () {
-    //         var line = fiveCrowns.model.generateRandomLine();
-    //         var bonus = generateBonus(line);
-    //         updateLruList(line, bonus);
-    //         updateCountList(line, bonus);
-    //         line.sort(function (a, b) { return a - b });
-    //         draw = { line, bonus };
-    //         return draw;
-    //     },
-
-
-
-    //     /**
-    //      * Check all tickets
-    //      */
-    //     generateTickets: function () {
-    //         for (let i = 0; i < tickets.length; i++) {
-    //             tickets[i].generateTicket();
-    //         }
-    //     },
+        // Class constructor
+        Game: Game,
 
 
 
-    //     /**
-    //      * Check all tickets
-    //      */
-    //     checkTickets: function () {
-    //         for (let i = 0; i < tickets.length; i++) {
-    //             checkTicket(tickets[i]);
-    //         }
-    //     },
+        clearScores: function () {
+            clearTotals(oGame.totals);
+            for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
+                rounds = oGame.rounds[roundNum];
+                scores = oGame.scores[roundNum];
+                for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+                    scores.roundScores[playerNum] = '';
+                };
+            }
+            oGame.setStaticScores();
+            oGame.currentDealer = 0;
+            oGame.initialDealer = 0;
+            oGame.currentRound = 0;
+        },
 
+        clearPlayers: function () {
+            for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+                oGame.players[playerNum].playerId = 0;
+                oGame.players[playerNum].playerName = "";
+                // oGame.players[playerNum].playerName = defaultPlayerName(playerNum);
+                oGame.players[playerNum].playerScores = ''; // this is wrong
+            }
+        },
 
+        updateTotals: function () {
+            clearTotals();
+            for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
+                scores = oGame.scores[roundNum];
+                for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+                    oGame.totals[playerNum] = oGame.totals[playerNum] + Number(scores.roundScores[playerNum]);
+                };
+            }
+        },
 
-    //     /**
-    //      * Create new ticket
-    //      */
-    //     newTicket: function (ticketType) {
-    //         let ticketNumber = tickets.length;
-    //         tickets[ticketNumber] = new fiveCrowns.ticket.newTicket(ticketType);
-    //         return tickets[ticketNumber];
-    //     },
+        updatePlayerName: function (playerNum, playerName) {
+            oGame.players[playerNum].playerName = playerName;
+        },
 
-
-
-    //     /**
-    //      * Create new tickets
-    //      */
-    //     newTickets: function () {
-    //         // Create new tickets
-    //         var mTest1 = fiveCrowns.model.newTicket('LuckyDip');
-    //         var mTest2 = fiveCrowns.model.newTicket('Same');
-    //         var mTest3 = fiveCrowns.model.newTicket('LRU');
-    //         var mTest4 = fiveCrowns.model.newTicket('Least');
-    //         var mTest5 = fiveCrowns.model.newTicket('MRU');
-    //         var mTest6 = fiveCrowns.model.newTicket('Most');
-    //     },
-
-
-    //     /**
-    //      * Clear all tickets
-    //      */
-    //     clearTickets: function () {
-    //         let tickets = fiveCrowns.model.getTickets();
-    //         for (let i = 0; i < tickets.length; i++) {
-    //             tickets[i].clearTicket();
-    //         };
-    //     },
-
-
-
-    //     /**
-    //      * Set model for table
-    //      */
-    //     setModel: function (oModel) {
-    //         oTickets = oModel;
-    //     },
-
-
-    //     /**
-    //      * Get model for table
-    //      */
-    //     getModel: function () {
-    //         return oTickets;
-    //     },
-
-
-    //     /**
-    //      * Run the draw
-    //      */
-    //     runSimulation: function (drawCount) {
-    //         // Perform a number of draws
-    //         for (let drawNum = 0; drawNum < drawCount; drawNum++) {
-    //             fiveCrowns.model.generateTickets();
-    //             fiveCrowns.model.generateResult();
-    //             fiveCrowns.model.checkTickets();
-    //         }
-    //     },
-
-
+        updatePlayerPosition: function (currentRow, newPosition) {
+            var newRow = newPosition - 1;
+            if (newRow < 0) newRow = 0;
+            if (newRow >= oGame.playerCount) newRow = oGame.playerCount - 1;
+            var removeRow = currentRow;
+            var insertRow = newRow
+            if (newRow < currentRow) {
+                removeRow++;
+            } else {
+                insertRow++;
+            };
+            oGame.players.splice(insertRow, 0, oGame.players[currentRow]);
+            oGame.players.splice(removeRow, 1);
+            for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
+                oGame.scores[roundNum].roundScores.splice(insertRow, 0, oGame.scores[roundNum].roundScores[currentRow]);
+                oGame.scores[roundNum].roundScores.splice(removeRow, 1);
+            }
+            updatePlayerPositions();
+            oGame.setStaticScores();
+            fiveCrowns.model.updateTotals();
+        },
 
 
     };

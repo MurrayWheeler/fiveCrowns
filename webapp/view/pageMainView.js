@@ -14,11 +14,20 @@ fiveCrowns.pageMainView = (function () {
       // Create page
       var page = new sap.m.Page("pageMain", { title: "Five Crowns" });
 
-      // Add Navigation button. Normaly only for back, but used to go to page 2 for now.
-      page.setShowNavButton(true);
-      page.setNavButtonType("Default");
-      page.setNavButtonTooltip("Game page");
-      page.attachNavButtonPress(function () { fiveCrowns.controller.gotoPageGame(oApp) });
+
+      // Page Add header
+      var menuItemNew = new sap.m.MenuItem({ icon: "sap-icon://media-play", text: "New game", press: function(){fiveCrowns.controller.onNewGame(oApp);} });
+      var menuItemResume = new sap.m.MenuItem({ icon: "sap-icon://restart", text: "Resume game", press: function(){fiveCrowns.controller.onResumeGame(oApp);} });
+      var menuItemSettings = new sap.m.MenuItem({ icon: "sap-icon://action-settings", text: "Settings", press: function(){fiveCrowns.controller.onSettings(oApp);} });
+      var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function(){oApp.back();} });
+
+      var menuMain = new sap.m.Menu({ items: [menuItemNew, menuItemResume, menuItemSettings, menuItemBack] });
+      var menuButtonMain = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuMain });
+      var barMainHeader = new sap.m.Toolbar({ id: "idBarMainHeader" });
+      barMainHeader.addContent(menuButtonMain);
+      page.setCustomHeader(barMainHeader);
+
+
 
       // Add content
       // page.addContent(new sap.m.Button({ text: "Go to Page 2", press: function () { fiveCrowns.controller.gotoPage2(oApp) } }));
@@ -30,12 +39,12 @@ fiveCrowns.pageMainView = (function () {
 
       playersLabel = new sap.m.Label({ text: "Players :" });
       hBox.addItem(playersLabel);
-      playerCount = new sap.m.Input({ placeholder: "Number of players", type: "Number" });
-      playerCount.setValue(4);
+      playerCount = new sap.m.Input({ id: "playerCount", placeholder: "Number of players", type: "Number" });
+      playerCount.setValue(fiveCrowns.settings.oSettings.defaultPlayerCount);
       hBox.addItem(playerCount);
 
       playButton = new sap.m.Button({ text: "Play" });
-      playButton.attachPress(function () { fiveCrowns.controller.playButton() });
+      playButton.attachPress(function () { fiveCrowns.controller.onPlayButton(oApp) });
       hBox.addItem(playButton);
 
       // clearButton = new sap.m.Button({ text: "Clear" });
@@ -43,28 +52,28 @@ fiveCrowns.pageMainView = (function () {
       // hBox.addItem(clearButton);
 
       // // Table layout
-      // mTable = new sap.m.Table({ id: "idTicketTable" });
-      // mTable.setModel(fiveCrowns.model.getModel());
-      // mTable.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Ticket Type" }) }));
-      // mTable.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Winnings" }) }));
-      // mTable.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 5" }) }));
-      // mTable.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 4" }) }));
-      // mTable.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 3" }) }));
-      // mTable.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 2" }) }));
-      // mTable.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 1" }) }));
+      // tabRounds = new sap.m.Table({ id: "idTicketTable" });
+      // tabRounds.setModel(fiveCrowns.model.getModel());
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Ticket Type" }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Winnings" }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 5" }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 4" }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 3" }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 2" }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Division 1" }) }));
 
-      // mColItem1 = new sap.m.ColumnListItem({});
-      // mColItem1.addCell(new sap.m.Text({ text: "{description}" }));
-      // mColItem1.addCell(new sap.m.Text({ text: "{winningsOutput}" }));
-      // mColItem1.addCell(new sap.m.Text({ text: "{div5}" }));
-      // mColItem1.addCell(new sap.m.Text({ text: "{div4}" }));
-      // mColItem1.addCell(new sap.m.Text({ text: "{div3}" }));
-      // mColItem1.addCell(new sap.m.Text({ text: "{div2}" }));
-      // mColItem1.addCell(new sap.m.Text({ text: "{div1}" }));
+      // colListItem = new sap.m.ColumnListItem({});
+      // colListItem.addCell(new sap.m.Text({ text: "{description}" }));
+      // colListItem.addCell(new sap.m.Text({ text: "{winningsOutput}" }));
+      // colListItem.addCell(new sap.m.Text({ text: "{div5}" }));
+      // colListItem.addCell(new sap.m.Text({ text: "{div4}" }));
+      // colListItem.addCell(new sap.m.Text({ text: "{div3}" }));
+      // colListItem.addCell(new sap.m.Text({ text: "{div2}" }));
+      // colListItem.addCell(new sap.m.Text({ text: "{div1}" }));
 
-      // mTable.bindAggregation("items", "/Tickets", mColItem1);
+      // tabRounds.bindAggregation("items", "/Tickets", colListItem);
 
-      // vBox.addItem(mTable);
+      // vBox.addItem(tabRounds);
 
 
       // Add page to app
