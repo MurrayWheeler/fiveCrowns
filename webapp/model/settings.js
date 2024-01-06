@@ -14,6 +14,7 @@ fiveCrowns.settings = (function () {
         this.playerPrefix = "P";
         this.highlightCurrentRound = '1';
         this.defaultPlayerCount = 3;
+        this.orientation = 'P';   // For testing
 
 
         // Methods
@@ -48,6 +49,7 @@ fiveCrowns.settings = (function () {
         // for (var propertyName in oSettingsValues) {
         //     oSettings[propertyName] = oSettingsValues[propertyName];
         // }
+        // Key words for searching "assign" "reference" "symbol"
         for (const propertyName of Object.keys(oSettingsValues)) {
             if (propertyName in oSettings) {
                 oSettings[propertyName] = oSettingsValues[propertyName];

@@ -4,14 +4,16 @@
 fiveCrowns.controller = (function () {
 
     function hideUnusedPlayers(players) {
-        for (let playerNum = 1; playerNum <= fiveCrowns.model.getMaxPlayers(); playerNum++) {
-            columnNum = playerNum + 0;
-            if (playerNum <= players) {
+        for (let playerNum = 0; playerNum < fiveCrowns.model.getMaxPlayers(); playerNum++) {
+            columnNum = playerNum + 1;  // Offset for "Round" column
+            if (playerNum < players) {
                 tabRounds.getColumns()[columnNum].setVisible(true);
                 barTotal.getContent()[columnNum].setVisible(true);
+                tabPlayers.getItems()[playerNum].setVisible(true);
             } else {
                 tabRounds.getColumns()[columnNum].setVisible(false);
                 barTotal.getContent()[columnNum].setVisible(false);
+                tabPlayers.getItems()[playerNum].setVisible(false);
             }
         }
     };
@@ -19,10 +21,8 @@ fiveCrowns.controller = (function () {
     function refreshPlayerNames(playerCount) {
         var oGame = fiveCrowns.model.getModel();
         for (let playerNum = 0; playerNum < playerCount; playerNum++) {
-            elementId = 'playerName-' + playerNum + "-inner";
-            if (document.getElementById(elementId)) {
-                document.getElementById(elementId).value = oGame.players[playerNum].playerName;
-            }
+            column = playerNum + 1;
+            tabRounds.getColumns()[column].getHeader().setValue(oGame.players[playerNum].playerName);
         }
     };
 
@@ -39,15 +39,20 @@ fiveCrowns.controller = (function () {
 
     function gotoGame(oApp) {
         var players = fiveCrowns.model.getPlayerCount();
-        // debugger; // not working????? I can't set player count to 8 after seleting high number
         document.getElementById("playerCount-inner").value = players;
         hideUnusedPlayers(players);
         tabRounds.getModel().refresh();
+        tabPlayers.getModel().refresh();
         refreshScreenTotals(players);
         refreshPlayerNames(players);
         highlightDealer(fiveCrowns.model.getModel());
         highlightRound(fiveCrowns.model.getModel());
-        oApp.to("pageGame");
+        if ((sap.ui.Device.system.desktop && fiveCrowns.settings.oSettings.orientation == 'P') ||
+            (!sap.ui.Device.system.desktop && sap.ui.Device.orientation.portrait)) {
+            oApp.to("pageGame");
+        } else {
+            oApp.to("pageGameLandscape");
+        };
     };
 
     function setReorderTable() {
@@ -124,31 +129,39 @@ fiveCrowns.controller = (function () {
         for (let playerNum = 0; playerNum < oGame.playerCount; playerNum++) {
             column = playerNum + 1;     // Offset to step over "Round" column
             tabRounds.getColumns()[column].getHeader().setValueState("None");
+            tabPlayers.getItems()[playerNum].getCells()[0].setValueState("None");
         }
         // Highlight current dealer
         column = oGame.currentDealer + 1;     // Offset to step over "Round" column
         tabRounds.getColumns()[column].getHeader().setValueState("Error");
+        tabPlayers.getItems()[oGame.currentDealer].getCells()[0].setValueState("Error");
     };
 
     function highlightRound(oGame) {
         // Unhighlight all rounds
         for (let roundNum = 0; roundNum < fiveCrowns.model.getMaxRounds(); roundNum++) {
             for (let playerNum = 0; playerNum < oGame.playerCount; playerNum++) {
-                column = playerNum + 1;     // Offset to step over "Round" column
+                column = playerNum + 1;         // Offset to step over "Round" column
+                columnLand = roundNum + 1;      // Offset to step over "Player" column (Landscape)
                 tabRounds.getItems()[roundNum].getCells()[column].setValueState("None");
+                tabPlayers.getItems()[playerNum].getCells()[columnLand].setValueState("None");
             }
         }
         row = oGame.getCurrentRound();
         switch (fiveCrowns.settings.oSettings.highlightCurrentRound) {
             case '0': break;   // Do not highlight round
             case '1':
-                column = oGame.currentDealer + 1;     // Offset to step over "Round" column
+                column = oGame.currentDealer + 1;       // Offset to step over "Round" column
+                columnLand = oGame.currentRound + 1;    // Offset to step over "Player" column (Landscape)
                 tabRounds.getItems()[row].getCells()[column].setValueState("Information");
+                tabPlayers.getItems()[oGame.currentDealer].getCells()[columnLand].setValueState("Information");
                 break;
             case '2':
                 for (let playerNum = 0; playerNum < oGame.playerCount; playerNum++) {
-                    column = playerNum + 1;     // Offset to step over "Round" column
+                    column = playerNum + 1;                 // Offset to step over "Round" column
+                    columnLand = oGame.currentRound + 1;    // Offset to step over "Player" column (Landscape)
                     tabRounds.getItems()[row].getCells()[column].setValueState("Warning");
+                    tabPlayers.getItems()[playerNum].getCells()[columnLand].setValueState("Warning");
                 }
                 break;
             default: break;
@@ -179,15 +192,28 @@ fiveCrowns.controller = (function () {
         onPlayerChange: function (element) {
             var playerName = element.getValue();
             var elementId = element.getId();
-            var playerNum = elementId.split('-')[1];
+            if ((sap.ui.Device.system.desktop && fiveCrowns.settings.oSettings.orientation == 'P') ||
+                (!sap.ui.Device.system.desktop && sap.ui.Device.orientation.portrait)) {
+                var playerNum = elementId.split('-')[1];
+            } else {
+                var playerNum = elementId.split('-')[2];
+            }
             fiveCrowns.model.updatePlayerName(playerNum, playerName);
+            tabPlayers.getModel().refresh();
+            refreshPlayerNames(players);
         },
 
         onScoreChange: function (element) {
             var score = element.getValue();
             var elementId = element.getId();
-            var round = Number(elementId.split('-')[3]);
-            var player = Number(elementId.split('-')[1]);
+            if ((sap.ui.Device.system.desktop && fiveCrowns.settings.oSettings.orientation == 'P') ||
+                (!sap.ui.Device.system.desktop && sap.ui.Device.orientation.portrait)) {
+                var round = Number(elementId.split('-')[3]);
+                var player = Number(elementId.split('-')[1]);
+            } else {
+                var round = Number(elementId.split('-')[1]);
+                var player = Number(elementId.split('-')[3]);
+            }
             oGame = fiveCrowns.model.getModel();
             oGame.setScore(round, player, score);
             fiveCrowns.model.updateTotals();

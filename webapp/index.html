@@ -13,9 +13,11 @@
   <script src="model/model.js"></script>
   <script src="model/utilities.js"></script>
   <script src="model/settings.js"></script>
+  <script src="controller/eventHandler.js"></script>
   <script src="controller/controller.js"></script>
   <script src="view/pageMainView.js"></script>
   <script src="view/pageGameView.js"></script>
+  <script src="view/pageGameLandscapeView.js"></script>
   <script src="view/pageGamesView.js"></script>
   <script src="view/pageReorderView.js"></script>
   <script src="view/pageChangeDealerView.js"></script>
@@ -37,14 +39,15 @@
       fiveCrowns.model.init();
 
       // Initialize layout
-      var app = new sap.m.App("myApp", { initialPage: "pageMain" });
-      fiveCrowns.pageMainView.layout(app);
-      fiveCrowns.pageGameView.layout(app);
-      fiveCrowns.pageReorderView.layout(app);
-      fiveCrowns.pageChangeDealerView.layout(app);
-      fiveCrowns.pageSettingsView.layout(app);
-      // fiveCrowns.pageGamesView.layout(app);
-      app.placeAt("content");
+      oApp = fiveCrowns.model.getApp();
+      fiveCrowns.pageMainView.layout(oApp);
+      fiveCrowns.pageGameView.layout(oApp);
+      fiveCrowns.pageGameLandscapeView.layout(oApp);
+      fiveCrowns.pageReorderView.layout(oApp);
+      fiveCrowns.pageChangeDealerView.layout(oApp);
+      fiveCrowns.pageSettingsView.layout(oApp);
+      // fiveCrowns.pageGamesView.layout(oApp);
+      oApp.placeAt("content");
 
     });
 

@@ -10,6 +10,7 @@ fiveCrowns.model = (function () {
 
     // var oPlayer = new Object;
     // var aPlayers = new Array;
+    var oApp = {};
     var oGame = new Object;
     var oReorder = { players: [{ playerPosition: 0, playerName: '' }] };
     var oChangeDealer = { players: [{ selected: false, playerName: '' }] };
@@ -30,10 +31,11 @@ fiveCrowns.model = (function () {
         for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
             this.players.push({
                 playerPosition: playerNum + 1,
-                playerId: 0, 
-                playerName: '', 
+                playerId: 0,
+                playerName: '',
                 // playerName: defaultPlayerName(playerNum),
-                r0: '', r1: '', r2: '', r3: '', r4: '', r5: '', r6: '', r7: '', r8: '', r9: '', r10: ''
+                r0: '', r1: '', r2: '', r3: '', r4: '', r5: '', r6: '', r7: '', r8: '', r9: '', r10: '',
+                t0: 0
             });
         };
         // Scores: 11 rounds x 8 players
@@ -124,8 +126,8 @@ fiveCrowns.model = (function () {
 
         // Set static score
         this.setStaticScores = function () {
-            for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
-                for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+            for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+                for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
                     this.setStaticScore(roundNum, playerNum);
                 };
             };
@@ -162,9 +164,10 @@ fiveCrowns.model = (function () {
         return roundName;
     }
 
-    /**
-     * Create game
-     */
+    function createApp() {
+        oApp = new sap.m.App("myApp", { initialPage: "pageMain" });
+    };
+
     function createGame() {
         oGame = new Game();
     };
@@ -172,6 +175,7 @@ fiveCrowns.model = (function () {
     function clearTotals() {
         for (let playerNum = 0; playerNum < oGame.totals.length; playerNum++) {
             oGame.totals[playerNum] = 0;
+            oGame.players[playerNum].t0 = 0;
         }
     };
 
@@ -220,8 +224,25 @@ fiveCrowns.model = (function () {
          */
         init: function () {
             fiveCrowns.settings.initSettings();
+            createApp();
             createGame();
             createTestData();
+            fiveCrowns.eventHandler.registerEvents();
+            // fiveCrowns.eventHandler.registerEvents(oEvent);
+        },
+
+        /**
+         * Set app
+         */
+        setApp: function (oApp) {
+            oApp = oApp;
+        },
+
+        /**
+         * Get app
+         */
+        getApp: function () {
+            return oApp;
         },
 
         /**
@@ -341,6 +362,9 @@ fiveCrowns.model = (function () {
                     oGame.totals[playerNum] = oGame.totals[playerNum] + Number(scores.roundScores[playerNum]);
                 };
             }
+            for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+                oGame.players[playerNum].t0 = oGame.totals[playerNum];
+            };
         },
 
         updatePlayerName: function (playerNum, playerName) {
