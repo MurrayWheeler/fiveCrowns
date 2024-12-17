@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 // Too hard right now. Maybe later.
 // Code left here for reference only
@@ -59,3 +60,19 @@ sap.ui.define([
 
         });
     });
+=======
+sap.ui.define(
+    [
+        "sap/ui/core/mvc/Controller"
+    ],
+    function(BaseController) {
+      "use strict";
+  
+      return BaseController.extend("nz.co.murray.fivecrowns.controller.App", {
+        onInit: function() {
+        }
+      });
+    }
+  );
+  
+>>>>>>> 40a7b487d624f359e9e987db037ff3dd3b4a48da

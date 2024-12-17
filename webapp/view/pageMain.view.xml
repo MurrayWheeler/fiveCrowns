@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- Not yet used 
 
 Too hard right now. Maybe later.
@@ -26,3 +27,12 @@ IE can I convert one by one?
 </Page>
    
 </mvc:View>
+=======
+<mvc:View controllerName="nz.co.murray.fivecrowns.controller.pageMain"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content />
+    </Page>
+</mvc:View>
+>>>>>>> 40a7b487d624f359e9e987db037ff3dd3b4a48da

@@ -6,12 +6,21 @@
 
 
 sap.ui.define([
+<<<<<<< HEAD
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/syncStyleClass",
     "sap/ui/model/json/JSONModel"
+=======
+    "sap/ui/core/mvc/Controller"
+>>>>>>> 40a7b487d624f359e9e987db037ff3dd3b4a48da
 ],
+function (Controller) {
+    "use strict";
 
+    return Controller.extend("nz.co.murray.fivecrowns.controller.pageMain", {
+        onInit: function () {
 
+<<<<<<< HEAD
     function (Controller, syncStyleClass, JSONModel) {
         "use strict";
 
@@ -57,4 +66,8 @@ sap.ui.define([
 
 
         });
+=======
+        }
+>>>>>>> 40a7b487d624f359e9e987db037ff3dd3b4a48da
     });
+});
