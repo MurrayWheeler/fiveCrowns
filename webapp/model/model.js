@@ -200,9 +200,10 @@ fiveCrowns.model = (function () {
         oGame = fiveCrowns.model.getModel();
         oGame.setGameName("Saturday");
         oGame.setPlayerName(0, "Murray");
-        oGame.setPlayerName(1, "Austin");
+        oGame.setPlayerName(1, "Leisa");
         oGame.setPlayerName(2, "Diane");
         oGame.setPlayerName(3, "Kay");
+        oGame.setPlayerName(4, "Austin");
         // oGame.setScore(0, 0, 3);
         // oGame.setScore(0, 1, 6);
         // oGame.setScore(0, 2, 9);

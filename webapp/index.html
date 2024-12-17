@@ -27,8 +27,11 @@
 
   <script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
     data-sap-ui-libs="sap.m, sap.ui.layout" data-sap-ui-libs="sap.ui.layout" data-sap-ui-theme="sap_belize"
-    data-sap-ui-xx-fakeOS="android" data-sap-ui-preload="async">
+    data-sap-ui-xx-fakeOS="android" data-sap-ui-compatVersion="edge" data-sap-ui-async="true"
+    data-sap-ui-onInit="module:sap/ui/core/ComponentSupport" data-sap-ui-resourceroots='{"fiveCrowns": "./"}'
+    data-sap-ui-preload="async">
     </script>
+
 
   <script>
     sap.ui.getCore().attachInit(function () {
@@ -36,13 +39,8 @@
       // // Initialize model
       fiveCrowns.model.init();
 
-      // // This prevents the screen from dimming or turning off as long as the wake lock is held.
-      // // Call the function when the app starts or based on user interaction
-      // debugger;
-      // document.addEventListener('DOMContentLoaded', () => { requestWakeLock(); });
-      // requestWakeLock();
 
-      // Initialize layout
+      // Initialize layouts
       oApp = fiveCrowns.model.getApp();
       fiveCrowns.pageMainView.layout(oApp);
       fiveCrowns.pageGameView.layout(oApp);
@@ -57,6 +55,8 @@
 
   </script>
 
+
+  <!-- Do I need this style stuff?  ToDo: sort out style stuff -->
   <style type=“text/css”>
     .dealerStyle {
       color: red;
@@ -118,6 +118,13 @@ vertical-align: inherit;
 </head>
 
 <body class="sapUiBody" id="content">
+  <!-- <div 
+    data-sap-ui-component 
+    data-id="container" 
+    data-name="fiveCrowns" 
+    data-settings='{"id" : "fiveCrowns"}'
+  ></div> -->
 </body>
+
 
 </html>

@@ -1,17 +1,25 @@
+
+// Too hard right now. Maybe later.
+// Code left here for reference only
+
+
+
+
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/core/syncStyleClass",
+    // "sap/ui/core/syncStyleClass",
     "sap/ui/model/json/JSONModel"
 ],
 
 
-    function (Controller, syncStyleClass, JSONModel) {
+    // function (Controller, syncStyleClass, JSONModel) {
+    function (Controller, JSONModel) {
         "use strict";
 
-        return Controller.extend("fiveCrowns.controller.pageGameOverview", {
+        return Controller.extend("fiveCrowns.controller.pageMain", {
 
             onInit: function () {
-                // debugger;
+                debugger;
                 var oModel = new JSONModel();
 
                 // oModel.setData({
