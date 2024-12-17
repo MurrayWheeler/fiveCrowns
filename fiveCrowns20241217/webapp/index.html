@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta charset="UTF-8">
+  <title>Five Crowns</title>
+
+  <!-- The easiest way to include some third-party code is simply putting it into the index.html, just like you would do on any non-UI5 web page. The only thing, you need to keep in mind here, is that you probably want to initialize your code after UI5 has been loaded. To do this, attach your code to the init event of by wrapping it in sap.ui.getCore().attachInit() like this: -->
+  <!--  <script language="javascript" src="path/to/YourLib.js"></script>  -->
+
+
+  <script src="model/model.js"></script>
+  <script src="model/utilities.js"></script>
+  <script src="model/settings.js"></script>
+  <script src="controller/eventHandler.js"></script>
+  <script src="controller/controller.js"></script>
+  <script src="view/pageMainView.js"></script>
+  <script src="view/pageGameView.js"></script>
+  <script src="view/pageGameLandscapeView.js"></script>
+  <script src="view/pageGamesView.js"></script>
+  <script src="view/pageReorderView.js"></script>
+  <script src="view/pageChangeDealerView.js"></script>
+  <script src="view/pageSettingsView.js"></script>
+  <script src="controller/screenTimeout.controller.js"></script>
+
+
+  <script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+    data-sap-ui-libs="sap.m, sap.ui.layout" data-sap-ui-libs="sap.ui.layout" data-sap-ui-theme="sap_belize"
+    data-sap-ui-xx-fakeOS="android" data-sap-ui-compatVersion="edge" data-sap-ui-async="true"
+    data-sap-ui-onInit="module:sap/ui/core/ComponentSupport" data-sap-ui-resourceroots='{"fiveCrowns": "./"}'
+    data-sap-ui-preload="async">
+    </script>
+
+
+  <script>
+    sap.ui.getCore().attachInit(function () {
+
+      // // Initialize model
+      fiveCrowns.model.init();
+
+
+      // Initialize layouts
+      oApp = fiveCrowns.model.getApp();
+      fiveCrowns.pageMainView.layout(oApp);
+      fiveCrowns.pageGameView.layout(oApp);
+      fiveCrowns.pageGameLandscapeView.layout(oApp);
+      fiveCrowns.pageReorderView.layout(oApp);
+      fiveCrowns.pageChangeDealerView.layout(oApp);
+      fiveCrowns.pageSettingsView.layout(oApp);
+      // fiveCrowns.pageGamesView.layout(oApp);
+      oApp.placeAt("content");
+
+    });
+
+  </script>
+
+
+  <!-- Do I need this style stuff?  ToDo: sort out style stuff -->
+  <style type=“text/css”>
+    .dealerStyle {
+      color: red;
+      background-color: blue;
+      width: 300px;
+      height: 70px;
+    }
+  </style>
+
+
+  <style>
+    .sapMInputBaseInner {
+      background: transparent;
+      border: none;
+      font-style: normal;
+      /* -webkit-appearance: none;
+      -moz-appearance: textfield; */
+      font-size: .875rem;
+      font-family: "72", "72full", Arial, Helvetica, sans-serif;
+      color: #000000;
+      line-height: normal;
+      padding: 0 0.1rem !important;
+      height: 100%;
+      box-sizing: border-box;
+      min-width: 3rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: inherit;
+    }
+
+    .sapMInputBaseHeightMargin {
+      margin: 0rem 0 !important;
+      margin-top: 0rem;
+      margin-right: 0px;
+      margin-bottom: 0rem;
+      margin-left: 0px;
+    }
+
+    /* .playerHeaderNameClass {
+background: transparent;
+border: none;
+font-style: normal;
+-webkit-appearance: none;
+-moz-appearance: textfield;
+font-size: .875rem;
+font-family: "72","72full",Arial,Helvetica,sans-serif;
+color: blue  !important;
+line-height: normal;
+padding: 0 0.75rem;
+height: 100%;
+box-sizing: border-box;
+min-width: 3rem;
+overflow: hidden;
+text-overflow: ellipsis;
+vertical-align: inherit;
+} */
+  </style>
+
+</head>
+
+<body class="sapUiBody" id="content">
+  <!-- <div 
+    data-sap-ui-component 
+    data-id="container" 
+    data-name="fiveCrowns" 
+    data-settings='{"id" : "fiveCrowns"}'
+  ></div> -->
+</body>
+
+
+</html>

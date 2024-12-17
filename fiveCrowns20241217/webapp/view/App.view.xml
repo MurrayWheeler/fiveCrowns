@@ -1,0 +1,32 @@
+<!-- Test using an XML page while still using js pages.
+
+
+Too hard right now. Maybe later.
+Code left here for reference only
+
+
+Can I use a combination of XML and javascript pages?
+IE can I convert one by one?
+
+
+-->
+
+
+<mvc:View controllerName="fiveCrowns.controller.pageMain"
+          xmlns:mvc="sap.ui.core.mvc"  
+          xmlns:core="sap.ui.core"
+          xmlns="sap.m">
+
+
+    <!-- <Button text="Say Hello" press=".onSayHello"/> -->
+    <!-- <Text text="Hello World!"/> -->
+
+<Shell>
+  <App>
+    <pages>
+      <mvc:XMLView viewName="fiveCrowns.pageMain"/>
+    </pages>
+  </App>
+</Shell>
+
+</mvc:View>
