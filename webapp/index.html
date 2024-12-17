@@ -22,14 +22,12 @@
   <script src="view/pageReorderView.js"></script>
   <script src="view/pageChangeDealerView.js"></script>
   <script src="view/pageSettingsView.js"></script>
+  <script src="controller/screenTimeout.controller.js"></script>
 
 
   <script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
-    data-sap-ui-libs="sap.m, sap.ui.layout" 
-    data-sap-ui-libs="sap.ui.layout" 
-    data-sap-ui-theme="sap_belize" 
-    data-sap-ui-xx-fakeOS="android" 
-    data-sap-ui-preload="async">
+    data-sap-ui-libs="sap.m, sap.ui.layout" data-sap-ui-libs="sap.ui.layout" data-sap-ui-theme="sap_belize"
+    data-sap-ui-xx-fakeOS="android" data-sap-ui-preload="async">
     </script>
 
   <script>
@@ -37,6 +35,12 @@
 
       // // Initialize model
       fiveCrowns.model.init();
+
+      // // This prevents the screen from dimming or turning off as long as the wake lock is held.
+      // // Call the function when the app starts or based on user interaction
+      // debugger;
+      // document.addEventListener('DOMContentLoaded', () => { requestWakeLock(); });
+      // requestWakeLock();
 
       // Initialize layout
       oApp = fiveCrowns.model.getApp();

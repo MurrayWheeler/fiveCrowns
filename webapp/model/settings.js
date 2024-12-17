@@ -14,6 +14,7 @@ fiveCrowns.settings = (function () {
         this.playerPrefix = "P";
         this.highlightCurrentRound = '1';
         this.defaultPlayerCount = 3;
+        this.screenTimeout = 300;
         this.orientation = 'P';   // For testing
 
 
@@ -26,6 +27,15 @@ fiveCrowns.settings = (function () {
 
         this.setPlayerPrefix = function (playerPrefix) {
             this.playerPrefix = playerPrefix;
+        }
+
+
+        this.getScreenTimeout = function () {
+            return this.screenTimeout;
+        }
+
+        this.setScreenTimeout = function (screenTimeout) {
+            this.screenTimeout = screenTimeout;
         }
 
 

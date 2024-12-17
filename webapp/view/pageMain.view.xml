@@ -1,0 +1,23 @@
+<!-- Test using an XML page while still using js pages.
+
+Can I use a combination of XML and javascript pages?
+IE can I convert one by one?
+
+
+-->
+
+
+<mvc:View controllerName="fiveCrowns.controller.test"
+          xmlns:mvc="sap.ui.core.mvc"  
+          xmlns:f="sap.ui.layout.form"
+          xmlns:core="sap.ui.core"
+          xmlns="sap.m">
+
+<Page title="Test page">
+    <content>
+
+
+    </content>
+</Page>
+   
+</mvc:View>

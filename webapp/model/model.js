@@ -181,7 +181,9 @@ fiveCrowns.model = (function () {
 
     function defaultPlayerName(playerNum) {
         var playerNumber = playerNum + 1;
-        var playerName = playerPrefix + playerNumber;
+        // var playerName = playerPrefix + playerNumber;
+        // This is generated at the initial load. IE Need to reload the app to see new prefix
+        var playerName = fiveCrowns.settings.oSettings.getPlayerPrefix() + playerNumber;
         return playerName;
     };
 

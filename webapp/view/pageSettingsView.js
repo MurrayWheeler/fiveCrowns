@@ -32,7 +32,9 @@ fiveCrowns.pageSettingsView = (function () {
       frmSettings.addContent(new sap.m.Input({ value: "{/playerPrefix}" }));
       frmSettings.addContent(new sap.m.Label({ text: "Highlight current round" }));
       frmSettings.addContent(new sap.m.Input({ value: "{/highlightCurrentRound}", type: "Number" }));
-      frmSettings.addContent(new sap.m.Label({ text: "Orientation (P for- portrait)" }));
+      frmSettings.addContent(new sap.m.Label({ text: "Screen timeout (seconds)" }));
+      frmSettings.addContent(new sap.m.Input({ value: "{/screenTimeout}", type: "Number" }));
+      frmSettings.addContent(new sap.m.Label({ text: "Orientation (P for portrait)" }));
       frmSettings.addContent(new sap.m.Input({ value: "{/orientation}" }));
 
       page.addContent(frmSettings);
