@@ -16,9 +16,9 @@ fiveCrowns.pageMainView = (function () {
 
 
       // Page Add header
-      var menuItemNew = new sap.m.MenuItem({ icon: "sap-icon://media-play", text: "New game", press: function(){fiveCrowns.controller.onNewGame(oApp);} });
-      var menuItemResume = new sap.m.MenuItem({ icon: "sap-icon://restart", text: "Resume game", press: function(){fiveCrowns.controller.onResumeGame(oApp);} });
-      var menuItemSettings = new sap.m.MenuItem({ icon: "sap-icon://action-settings", text: "Settings", press: function(){fiveCrowns.controller.onSettings(oApp);} });
+      var menuItemNew = new sap.m.MenuItem({ icon: "sap-icon://media-play", text: "New game", press: function(){fiveCrowns.pageMainController.onNewGame(oApp);} });
+      var menuItemResume = new sap.m.MenuItem({ icon: "sap-icon://restart", text: "Resume game", press: function(){fiveCrowns.pageMainController.onResumeGame(oApp);} });
+      var menuItemSettings = new sap.m.MenuItem({ icon: "sap-icon://action-settings", text: "Settings", press: function(){fiveCrowns.pageMainController.onSettings(oApp);} });
       var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function(){oApp.back();} });
 
       var menuMain = new sap.m.Menu({ items: [menuItemNew, menuItemResume, menuItemSettings, menuItemBack] });
@@ -30,7 +30,7 @@ fiveCrowns.pageMainView = (function () {
 
 
       // Add content
-      // page.addContent(new sap.m.Button({ text: "Go to Page 2", press: function () { fiveCrowns.controller.gotoPage2(oApp) } }));
+      // page.addContent(new sap.m.Button({ text: "Go to Page 2", press: function () { fiveCrowns.pageMainController.gotoPage2(oApp) } }));
       vBox = new sap.m.VBox({ alignItems: "Center", justifyContent: "SpaceAround" });
       page.addContent(vBox);
 
@@ -44,11 +44,11 @@ fiveCrowns.pageMainView = (function () {
       hBox.addItem(playerCount);
 
       playButton = new sap.m.Button({ text: "Play" });
-      playButton.attachPress(function () { fiveCrowns.controller.onPlayButton(oApp) });
+      playButton.attachPress(function () { fiveCrowns.pageMainController.onPlayButton(oApp) });
       hBox.addItem(playButton);
 
       // clearButton = new sap.m.Button({ text: "Clear" });
-      // clearButton.attachPress(function () { fiveCrowns.controller.clearButton() });
+      // clearButton.attachPress(function () { fiveCrowns.pageMainController.clearButton() });
       // hBox.addItem(clearButton);
 
       // // Table layout

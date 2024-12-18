@@ -1,7 +1,7 @@
 "use-strict";
 
 
-fiveCrowns.controller = (function () {
+fiveCrowns.pageGameController = (function () {
 
     function hideUnusedPlayers(players) {
         for (let playerNum = 0; playerNum < fiveCrowns.model.getMaxPlayers(); playerNum++) {
@@ -34,25 +34,6 @@ fiveCrowns.controller = (function () {
                 document.getElementById(elementId).value = oGame.totals[playerNum];
             }
         }
-    };
-
-
-    function gotoGame(oApp) {
-        var players = fiveCrowns.model.getPlayerCount();
-        document.getElementById("playerCount-inner").value = players;
-        hideUnusedPlayers(players);
-        tabRounds.getModel().refresh();
-        tabPlayers.getModel().refresh();
-        refreshScreenTotals(players);
-        refreshPlayerNames(players);
-        highlightDealer(fiveCrowns.model.getModel());
-        highlightRound(fiveCrowns.model.getModel());
-        if ((sap.ui.Device.system.desktop && fiveCrowns.settings.oSettings.orientation == 'P') ||
-            (!sap.ui.Device.system.desktop && sap.ui.Device.orientation.portrait)) {
-            oApp.to("pageGame");
-        } else {
-            oApp.to("pageGameLandscape");
-        };
     };
 
     function setReorderTable() {
@@ -172,22 +153,12 @@ fiveCrowns.controller = (function () {
 
     return {
 
-        onPlayButton: function (oApp) {
-            fiveCrowns.model.clearScores();
-            fiveCrowns.model.setPlayerCount(playerCount.getValue());   // Get player count from screen
-            gotoGame(oApp);
-        },
-
-        onNewGame: function (oApp) {
-            fiveCrowns.model.clearScores();
-            fiveCrowns.model.clearPlayers();
-            fiveCrowns.model.setPlayerCount(playerCount.getValue());   // Get player count from screen
-            gotoGame(oApp);
-        },
-
-        onResumeGame: function (oApp) {
-            gotoGame(oApp);
-        },
+        hideUnusedPlayers: hideUnusedPlayers,
+        refreshScreenTotals: refreshScreenTotals,
+        refreshPlayerNames: refreshPlayerNames,
+        highlightDealer: highlightDealer,
+        highlightRound: highlightRound,
+        setReorderTable: setReorderTable,
 
         onPlayerChange: function (element) {
             var playerName = element.getValue();
@@ -222,67 +193,23 @@ fiveCrowns.controller = (function () {
             highlightRound(oGame);
         },
 
-        onGameRefresh: function () {
-            tabReorder.getModel().refresh();
-            refreshPlayerNames(fiveCrowns.model.getPlayerCount());
-        },
+        // Refresh for testing. Left here for a short while in case it is wanted again.
+        // onGameRefresh: function () {
+        //     // What causes screen to update?
+        //     // When changing from portrait to landscape, scores do not update
+        //     // tabReorder.getModel().refresh();
+        //     tabRounds.getModel().refresh();
+        //     tabPlayers.getModel().refresh();
+        // },
 
         onReorderPlayers: function (oApp) {
             setReorderTable();
             oApp.to("pageReorder");
         },
 
-        onReorderChange: function (element) {
-            var playerPosition = element.getValue();
-            var elementId = element.getId();
-            var rowNum = elementId.split('-')[2];
-            fiveCrowns.model.updatePlayerPosition(rowNum, playerPosition);
-            setReorderTable();
-            refreshPlayerNames(fiveCrowns.model.getPlayerCount());
-            tabRounds.getModel().refresh();
-            refreshScreenTotals(fiveCrowns.model.getPlayerCount());
-        },
-
-        onReorderBack: function (oApp) {
-            oApp.back();
-        },
-
         onDealerChange: function (oApp) {
             setChangeDealerTable();
             oApp.to("pageChangeDealer");
-        },
-
-        onChangeDealer: function (element) {
-            debugger;            // Not used. Dealer changed on "Back" function
-        },
-
-        onChangeDealerBack: function (oApp) {
-            oGame = fiveCrowns.model.getModel();
-            oChangeDealer = fiveCrowns.model.getChangeDealerModel();
-            for (let playerNum = 0; playerNum < oGame.playerCount; playerNum++) {
-                if (oChangeDealer.players[playerNum].selected) {
-                    initialDealer = playerNum - (oGame.currentRound % oGame.playerCount);  // MOD function
-                    if (initialDealer < 0) {
-                        initialDealer = initialDealer + oGame.playerCount;
-                    }
-                    oGame.setInitialDealer(initialDealer);
-                    oGame.setCurrentDealer(playerNum);
-                    highlightDealer(oGame);
-                    highlightRound(oGame);
-                    break;
-                }
-            }
-            oApp.back();
-        },
-
-        onSettings: function (oApp) {
-            oApp.to("pageSettings");
-        },
-
-        onSettingsBack: function (oApp) {
-            // Save settings here for now. I may move this later. Eg. After each change, or after confirmation popup
-            fiveCrowns.settings.saveSettings(fiveCrowns.settings.oSettings);
-            oApp.back();
         },
 
         onClearScores: function () {

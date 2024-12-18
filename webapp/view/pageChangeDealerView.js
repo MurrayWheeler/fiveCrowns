@@ -15,7 +15,7 @@ fiveCrowns.pageChangeDealerView = (function () {
       var page = new sap.m.Page("pageChangeDealer", { title: "Change Dealer" });
 
       // Add content
-      var btnChangeDealerBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.controller.onChangeDealerBack(oApp); } });
+      var btnChangeDealerBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageChangeDealerController.onChangeDealerBack(oApp); } });
       var barChangeDealerHeader = new sap.m.Toolbar({ id: "idBarChangeDealerHeader" });
       barChangeDealerHeader.addContent(btnChangeDealerBack);
       page.setCustomHeader(barChangeDealerHeader);
@@ -32,7 +32,7 @@ fiveCrowns.pageChangeDealerView = (function () {
 
       // Add cells
       colItemDealer = new sap.m.ColumnListItem({});
-      // colItemDealer.addCell(new sap.m.RadioButton({ value: "{selected}", change: function () { fiveCrowns.controller.onChangeDealer(this) } }));
+      // colItemDealer.addCell(new sap.m.RadioButton({ value: "{selected}", change: function () { fiveCrowns.pageChangeDealerController.onChangeDealer(this) } }));
       // colItemDealer.addCell(new sap.m.RadioButton({ id: "idRadioButton", groupName: "rbGroup1" }));
       colItemDealer.addCell(new sap.m.RadioButton({ selected: "{selected}", groupName: "rbGroup1" }));
       colItemDealer.addCell(new sap.m.Text({ text: "{playerName}" }));

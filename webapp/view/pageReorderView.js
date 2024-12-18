@@ -15,13 +15,13 @@ fiveCrowns.pageReorderView = (function () {
       var page = new sap.m.Page("pageReorder", { title: "Reorder Players" });
 
       // Add content
-      // var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear rounds", press: function () { fiveCrowns.controller.onClearScores(); } });
-      // var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.controller.onReorderPlayers(oApp); } });
+      // var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear rounds", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
+      // var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
       // var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { oApp.back(); } });
 
       // var menuReorder = new sap.m.Menu({ items: [menuItemReorder, menuItemClear, menuItemBack] });
       // var menuButtonReorder = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuReorder });
-      var btnReorderBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.controller.onReorderBack(oApp); } });
+      var btnReorderBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageReorderController.onReorderBack(oApp); } });
       var barReorderHeader = new sap.m.Toolbar({ id: "idBarReorderHeader" });
       // barReorderHeader.addContent(menuButtonReorder);
       barReorderHeader.addContent(btnReorderBack);
@@ -41,7 +41,7 @@ fiveCrowns.pageReorderView = (function () {
 
       // Add cells
       colItemPlayer = new sap.m.ColumnListItem({});
-      colItemPlayer.addCell(new sap.m.Input({ id: "idPlayerPosition", value: "{playerPosition}", change: function () { fiveCrowns.controller.onReorderChange(this) } }));
+      colItemPlayer.addCell(new sap.m.Input({ id: "idPlayerPosition", value: "{playerPosition}", change: function () { fiveCrowns.pageReorderController.onReorderChange(this) } }));
       colItemPlayer.addCell(new sap.m.Text({ text: "{playerName}" }));
 
 

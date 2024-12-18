@@ -22,11 +22,13 @@ fiveCrowns.eventHandler = (function () {
             if (pageId == "pageGame") {
                 if (sap.ui.Device.orientation.landscape) {
                     oApp.to("pageGameLandscape");
+                    tabPlayers.getModel().refresh();
                 };
             };
             if (pageId == "pageGameLandscape") {
                 if (sap.ui.Device.orientation.portrait) {
                     oApp.to("pageGame");
+                    tabRounds.getModel().refresh();
                 };
             };
         },

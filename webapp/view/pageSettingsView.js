@@ -15,7 +15,7 @@ fiveCrowns.pageSettingsView = (function () {
       var page = new sap.m.Page("pageSettings", { title: "Settings" });
 
       // Add content
-      var btnSettingsBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.controller.onSettingsBack(oApp); } });
+      var btnSettingsBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageSettingsController.onSettingsBack(oApp); } });
       var barSettingsHeader = new sap.m.Toolbar({ id: "idBarSettingsHeader" });
       barSettingsHeader.addContent(btnSettingsBack);
       page.setCustomHeader(barSettingsHeader);

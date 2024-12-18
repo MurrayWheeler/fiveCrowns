@@ -43,11 +43,11 @@ fiveCrowns.pageGameView = (function () {
       // page.attachNavButtonPress(function () { oApp.back(); });
 
       // Page Add header
-      var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.controller.onClearScores(); } });
-      var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.controller.onReorderPlayers(oApp); } });
-      var menuItemDealer = new sap.m.MenuItem({ icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.controller.onDealerChange(oApp); } });
+      var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
+      var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
+      var menuItemDealer = new sap.m.MenuItem({ icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.pageGameController.onDealerChange(oApp); } });
       var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { oApp.back(); } });
-      var menuItemRefresh = new sap.m.MenuItem({ icon: "sap-icon://refresh", text: "Refresh", press: function () { fiveCrowns.controller.onGameRefresh(); } });
+      var menuItemRefresh = new sap.m.MenuItem({ icon: "sap-icon://refresh", text: "Refresh", press: function () { fiveCrowns.pageGameController.onGameRefresh(); } });
 
       // debugger; // Remove refresh option later after testing  
       // var menuGame = new sap.m.Menu({ items: [menuItemReorder, menuItemClear, menuItemBack, menuItemRefresh] });
@@ -59,7 +59,7 @@ fiveCrowns.pageGameView = (function () {
 
 
       // clearButton = new sap.m.Button({ text: "Clear" });
-      // clearButton.attachPress(function () { fiveCrowns.controller.clearButton() });
+      // clearButton.attachPress(function () { fiveCrowns.pageGameController.clearButton() });
       // hBox.addItem(clearButton);
 
 
@@ -80,7 +80,7 @@ fiveCrowns.pageGameView = (function () {
               id: playerHeaderId,
               value: playerName,
               placeholder: placeHolder,
-              change: function () { fiveCrowns.controller.onPlayerChange(this) }
+              change: function () { fiveCrowns.pageGameController.onPlayerChange(this) }
             })
           }
         ));
@@ -118,15 +118,15 @@ fiveCrowns.pageGameView = (function () {
       // Add cells
       colListItem = new sap.m.ColumnListItem({});
       colListItem.addCell(new sap.m.Text({ id: "roundId", text: "{round}" }));
-      // colListItem.addCell(new sap.m.Input({ value: "{s0}", type: "Number", styleClass: "sapUiSizeCompact", change: function(){fiveCrowns.controller.onScoreChange()} }));   
-      colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-1", value: "{s1}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-2", value: "{s2}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-3", value: "{s3}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-4", value: "{s4}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-5", value: "{s5}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-6", value: "{s6}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-7", value: "{s7}", type: "Number", change: function () { fiveCrowns.controller.onScoreChange(this) } }));
+      // colListItem.addCell(new sap.m.Input({ value: "{s0}", type: "Number", styleClass: "sapUiSizeCompact", change: function(){fiveCrowns.pageGameController.onScoreChange()} }));   
+      colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-1", value: "{s1}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-2", value: "{s2}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-3", value: "{s3}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-4", value: "{s4}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-5", value: "{s5}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-6", value: "{s6}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-7", value: "{s7}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
 
       // debugger;  // Set underline only
       // colListItem.addStyleClass("sapUiSmallMarginBottom");
