@@ -115,7 +115,9 @@ fiveCrowns.pageGameController = (function () {
         // Highlight current dealer
         column = oGame.currentDealer + 1;     // Offset to step over "Round" column
         tabRounds.getColumns()[column].getHeader().setValueState("Error");
+        tabRounds.getColumns()[column].getHeader().setValueStateText("Dealer");
         tabPlayers.getItems()[oGame.currentDealer].getCells()[0].setValueState("Error");
+        tabPlayers.getItems()[oGame.currentDealer].getCells()[0].setValueStateText("Dealer");  // Set for Landscape mode
     };
 
     function highlightRound(oGame) {
@@ -135,7 +137,9 @@ fiveCrowns.pageGameController = (function () {
                 column = oGame.currentDealer + 1;       // Offset to step over "Round" column
                 columnLand = oGame.currentRound + 1;    // Offset to step over "Player" column (Landscape)
                 tabRounds.getItems()[row].getCells()[column].setValueState("Information");
+                tabRounds.getItems()[row].getCells()[column].setValueStateText("Dealer");
                 tabPlayers.getItems()[oGame.currentDealer].getCells()[columnLand].setValueState("Information");
+                tabPlayers.getItems()[oGame.currentDealer].getCells()[columnLand].setValueStateText("Dealer"); // Set for Landscape mode
                 break;
             case '2':
                 for (let playerNum = 0; playerNum < oGame.playerCount; playerNum++) {
