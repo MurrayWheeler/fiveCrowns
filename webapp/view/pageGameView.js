@@ -119,14 +119,14 @@ fiveCrowns.pageGameView = (function () {
       colListItem = new sap.m.ColumnListItem({});
       colListItem.addCell(new sap.m.Text({ id: "roundId", text: "{round}" }));
       // colListItem.addCell(new sap.m.Input({ value: "{s0}", type: "Number", styleClass: "sapUiSizeCompact", change: function(){fiveCrowns.pageGameController.onScoreChange()} }));   
-      colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-1", value: "{s1}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-2", value: "{s2}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-3", value: "{s3}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-4", value: "{s4}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-5", value: "{s5}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-6", value: "{s6}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-7", value: "{s7}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-1", value: "{s1}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-2", value: "{s2}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-3", value: "{s3}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-4", value: "{s4}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-5", value: "{s5}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-6", value: "{s6}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-7", value: "{s7}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
 
       // debugger;  // Set underline only
       // colListItem.addStyleClass("sapUiSmallMarginBottom");
@@ -140,14 +140,14 @@ fiveCrowns.pageGameView = (function () {
       // Page Add footer
       barTotal = new sap.m.Toolbar({ id: "idBarTotal" });
       barTotal.addContent(new sap.m.Input({ value: "Total", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total0", type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total1", type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total2", type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total3", type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total4", type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total5", type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total6", type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total7", type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total0", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total1", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total2", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total3", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total4", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total5", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total6", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      barTotal.addContent(new sap.m.Input({ id: "total7", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
       page.setFooter(barTotal);
       // page.setFloatingFooter(true);
 
