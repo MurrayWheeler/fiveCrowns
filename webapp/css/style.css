@@ -43,6 +43,12 @@
     font-size: 20px !important;    /* Set font size for table headers */
 }
 
+.myTableInputMargins .sapMInput {
+    margin: 1px !important; /* Adjust the margins as needed */
+}
+.myTableInputMargins .sapMInputBaseInner {
+    padding: 1px !important; /* Adjust the padding as needed */
+}
 
 .myToolbarFontSize .sapMToolbar {
     font-size: 20px !important;  /* Set your desired font size */

@@ -56,6 +56,7 @@ fiveCrowns.pageGameView = (function () {
       var menuButtonGame = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuGame });
       var barGameHeader = new sap.m.Toolbar({ id: "idBarGameHeader" });
       barGameHeader.addContent(menuButtonGame);
+      barGameHeader.addContent( new sap.m.Text({ text: "Five Crowns" }));
       page.setCustomHeader(barGameHeader);
 
 
@@ -149,11 +150,15 @@ fiveCrowns.pageGameView = (function () {
       // Load custom CSS
       jQuery.sap.includeStyleSheet("css/style.css");
       page.addStyleClass("myCustomBackground");
+      
       tabRounds.addStyleClass("myTableBackground");
       tabRounds.addStyleClass("myTableFontColor");
       tabRounds.addStyleClass("myTableFontSize");
+      tabRounds.addStyleClass("myTableInputMargins");
+
       barTotal.addStyleClass("myToolbarFontSize");
 
+      
     },
 
 
