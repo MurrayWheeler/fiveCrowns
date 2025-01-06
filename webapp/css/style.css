@@ -4,8 +4,9 @@
 
 .myCustomBackground {
     /*    background-color: rebeccapurple !important; /* !important ensures it overrides default styles */
-    background-color: #740190 !important;    /* !important ensures it overrides default styles */
+    background-color: #740190 !important;     /* !important ensures it overrides default styles */
 }
+
 .myTableBackground .sapMListTblRow {
     background-color: #740190 !important;
 }
@@ -43,19 +44,25 @@
     font-size: 20px !important;    /* Set font size for table headers */
 }
 
+
 .myTableInputMargins .sapMInput {
-    margin: 1px !important; /* Adjust the margins as needed */
+    margin: 1px !important;     /* Adjust the margins as needed */
+    text-align: center;         /* Center-align the text */
+    padding: 1px !important;    /* Adjust the padding as needed */
 }
 .myTableInputMargins .sapMInputBaseInner {
-    padding: 1px !important; /* Adjust the padding as needed */
+    margin: 1px !important;    /* Adjust the margins as needed */
+    text-align: center;        /* Center-align the text */
+    padding: 1px !important;   /* Adjust the padding as needed */
 }
 
-.myToolbarFontSize .sapMToolbar {
-    font-size: 20px !important;  /* Set your desired font size */
-}
+
+/* .myToolbarFontSize .sapMToolbar { */
+    /* font-size: 20px !important;   /* Set your desired font size */
+/* } */
 .myToolbarFontSize .sapMLabel,
 .myToolbarFontSize .sapMButton,
 .myToolbarFontSize .sapMInputBaseInner,
 .myToolbarFontSize .sapMText {
-    font-size: 20px !important;  /* Apply font size to text, labels, and buttons inside the toolbar */
+    font-size: 20px !important;    /* Apply font size to text, labels, and buttons inside the toolbar */
 }

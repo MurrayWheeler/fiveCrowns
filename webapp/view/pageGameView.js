@@ -56,6 +56,7 @@ fiveCrowns.pageGameView = (function () {
       var menuButtonGame = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuGame });
       var barGameHeader = new sap.m.Toolbar({ id: "idBarGameHeader" });
       barGameHeader.addContent(menuButtonGame);
+      barGameHeader.addContent( new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
       barGameHeader.addContent( new sap.m.Text({ text: "Five Crowns" }));
       page.setCustomHeader(barGameHeader);
 
@@ -71,7 +72,8 @@ fiveCrowns.pageGameView = (function () {
       tabRounds.setModel(oModel);
       // Add columns
       // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Round" }) }));
-      tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "50px" }) }));
+      tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: " " }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "50px" }) }));
 
       players = fiveCrowns.model.getModel().players;      // Add players as columns
       for (let playerNum = 0; playerNum < fiveCrowns.model.getMaxPlayers(); playerNum++) {
@@ -110,14 +112,15 @@ fiveCrowns.pageGameView = (function () {
       colListItem = new sap.m.ColumnListItem({});
       colListItem.addCell(new sap.m.Text({ id: "roundId", text: "{round}" }));
       // colListItem.addCell(new sap.m.Input({ value: "{s0}", type: "Number", styleClass: "sapUiSizeCompact", change: function(){fiveCrowns.pageGameController.onScoreChange()} }));   
-      colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-1", value: "{s1}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-2", value: "{s2}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-3", value: "{s3}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-4", value: "{s4}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-5", value: "{s5}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-6", value: "{s6}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-7", value: "{s7}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      // colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-1", value: "{s1}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-2", value: "{s2}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-3", value: "{s3}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-4", value: "{s4}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-5", value: "{s5}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-6", value: "{s6}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      colListItem.addCell(new sap.m.Input({ id: "s-7", value: "{s7}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
 
       // debugger;  // Set underline only
       // colListItem.addStyleClass("sapUiSmallMarginBottom");
@@ -157,6 +160,7 @@ fiveCrowns.pageGameView = (function () {
       tabRounds.addStyleClass("myTableInputMargins");
 
       barTotal.addStyleClass("myToolbarFontSize");
+      barTotal.addStyleClass("myTableInputMargins");
 
       
     },
