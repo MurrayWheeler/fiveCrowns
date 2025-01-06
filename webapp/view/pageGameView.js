@@ -11,6 +11,7 @@ fiveCrowns.pageGameView = (function () {
      */
     layout: function (oApp) {
 
+
       // Create page
       // debugger;
       // pageMmm = document.getElementById("pageGame");
@@ -68,7 +69,9 @@ fiveCrowns.pageGameView = (function () {
       var oModel = new sap.ui.model.json.JSONModel(fiveCrowns.model.getModel());
       tabRounds.setModel(oModel);
       // Add columns
-      tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Round" }) }));
+      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Round" }) }));
+      tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "50px" }) }));
+
       players = fiveCrowns.model.getModel().players;      // Add players as columns
       for (let playerNum = 0; playerNum < fiveCrowns.model.getMaxPlayers(); playerNum++) {
         playerName = players[playerNum].playerName;
@@ -102,19 +105,6 @@ fiveCrowns.pageGameView = (function () {
       // </Input>
 
 
-      // debugger;
-      // document.getElementById("demo").innerHTML = obj.name;
-      // tabRounds.getColumns()[1].getHeader().addStyleClass("playerHeaderNameClass");
-      // tabRounds.getColumns()[1].getHeader().setValueState("Success");
-      // tabRounds.getColumns()[2].getHeader().setValueState("Information");
-      // tabRounds.getColumns()[3].getHeader().setValueState("Warning");
-      // tabRounds.getColumns()[4].getHeader().setValueState("Error");
-      // tabRounds.getColumns()[1].getHeader().setEditable(false);
-      // tabRounds.getColumns()[2].getHeader().setEnabled(false);
-      // tabRounds.getColumns()[3].getHeader().setEditable(false);
-      // tabRounds.getColumns()[4].getHeader().setEditable(false);
-      // debugger;  // Set state for dealer
-
       // Add cells
       colListItem = new sap.m.ColumnListItem({});
       colListItem.addCell(new sap.m.Text({ id: "roundId", text: "{round}" }));
@@ -136,7 +126,6 @@ fiveCrowns.pageGameView = (function () {
       tabRounds.bindAggregation("items", "/rounds", colListItem);
       page.addContent(tabRounds);
 
-
       // Page Add footer
       barTotal = new sap.m.Toolbar({ id: "idBarTotal" });
       barTotal.addContent(new sap.m.Input({ value: "Total", editable: false }));
@@ -154,6 +143,16 @@ fiveCrowns.pageGameView = (function () {
 
       // Add page to app
       oApp.addPage(page);
+
+
+
+      // Load custom CSS
+      jQuery.sap.includeStyleSheet("css/style.css");
+      page.addStyleClass("myCustomBackground");
+      tabRounds.addStyleClass("myTableBackground");
+      tabRounds.addStyleClass("myTableFontColor");
+      tabRounds.addStyleClass("myTableFontSize");
+      barTotal.addStyleClass("myToolbarFontSize");
 
     },
 

@@ -1,1 +1,55 @@
 /* Enter your custom styles here */
+
+
+
+.myCustomBackground {
+    /*    background-color: rebeccapurple !important; /* !important ensures it overrides default styles */
+    background-color: #740190 !important;    /* !important ensures it overrides default styles */
+}
+.myTableBackground .sapMListTblRow {
+    background-color: #740190 !important;
+}
+.myTableBackground .sapMListTblHeader {    /* This does not seem to be working.???? */
+    background-color: #740190 !important;
+}
+
+.myTableFontColor {
+    color: yellow !important;    /* Change font color for all text in the table */
+}
+.myTableFontColor .sapMText {
+    color: yellow !important;    /* Ensure text inside cells is also styled */
+}
+.myTableFontColor .sapMListTblHeader .sapMText {
+    color: black !important;    /* Ensure text inside cells is also styled */
+}
+.myTableFontColor .sapMListTblHeader .sapMInputBaseInner {
+    color: black !important;    /* Ensure text inside cells is also styled */
+}
+
+
+.myTableFontSize {
+    font-size: 20px !important;    /* Set font size for the entire table */
+}
+.myTableFontSize .sapMText {
+    font-size: 20px !important;    /* Ensure text in table cells has the desired size */
+}
+.myTableFontSize .sapMInputBaseInner {
+    font-size: 20px !important;    /* Ensure text in table cells has the desired size */
+}
+.myTableFontSize .sapMListTblHeader .sapMText {
+    font-size: 20px !important;    /* Set font size for table headers */
+}
+.myTableFontSize .sapMListTblHeader .sapMInputBaseInner {
+    font-size: 20px !important;    /* Set font size for table headers */
+}
+
+
+.myToolbarFontSize .sapMToolbar {
+    font-size: 20px !important;  /* Set your desired font size */
+}
+.myToolbarFontSize .sapMLabel,
+.myToolbarFontSize .sapMButton,
+.myToolbarFontSize .sapMInputBaseInner,
+.myToolbarFontSize .sapMText {
+    font-size: 20px !important;  /* Apply font size to text, labels, and buttons inside the toolbar */
+}

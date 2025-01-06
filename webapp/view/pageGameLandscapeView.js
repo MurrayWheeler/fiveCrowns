@@ -214,6 +214,13 @@ fiveCrowns.pageGameLandscapeView = (function () {
       }
 
 
+      // Load custom CSS
+//      jQuery.sap.includeStyleSheet("css/style.css");
+      page.addStyleClass("myCustomBackground");
+      tabPlayers.addStyleClass("myTableBackground");
+      tabPlayers.addStyleClass("myTableFontColor");
+      tabPlayers.addStyleClass("myTableFontSize");
+      // barTotal.addStyleClass("myToolbarFontSize");
 
 
     },
