@@ -223,6 +223,11 @@ fiveCrowns.pageGameController = (function () {
             tabRounds.scrollToIndex(0);
         },
 
+        onBack: function (oApp) {
+            debugger;
+            oApp.back();
+        },
+
 
     };
 
