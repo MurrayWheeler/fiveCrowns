@@ -25,6 +25,7 @@ fiveCrowns.pageMainController = (function () {
 
 
     function gotoList(oApp) {
+        requestFullScreen();
         oApp.to("pageGames");
     };
 
@@ -57,6 +58,7 @@ fiveCrowns.pageMainController = (function () {
         },
 
         onSettings: function (oApp) {
+            requestFullScreen();
             oApp.to("pageSettings");
         },
 
