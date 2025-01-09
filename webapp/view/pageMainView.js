@@ -5,7 +5,6 @@ fiveCrowns.pageMainView = (function () {
 
   return {
 
-
     /**
      * Method for page layout.
      */
@@ -15,16 +14,20 @@ fiveCrowns.pageMainView = (function () {
       var page = new sap.m.Page("pageMain", { title: "Five Crowns" });
 
 
-      // Page Add header
-      var menuItemNew = new sap.m.MenuItem({ icon: "sap-icon://media-play", text: "New game", press: function(){fiveCrowns.pageMainController.onNewGame(oApp);} });
-      var menuItemResume = new sap.m.MenuItem({ icon: "sap-icon://restart", text: "Resume game", press: function(){fiveCrowns.pageMainController.onResumeGame(oApp);} });
-      var menuItemSettings = new sap.m.MenuItem({ icon: "sap-icon://action-settings", text: "Settings", press: function(){fiveCrowns.pageMainController.onSettings(oApp);} });
-      var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function(){oApp.back();} });
-
-      var menuMain = new sap.m.Menu({ items: [menuItemNew, menuItemResume, menuItemSettings, menuItemBack] });
+      // Add menu button
+      var menuItemNew = new sap.m.MenuItem({ icon: "sap-icon://media-play", text: "New game", press: function () { fiveCrowns.pageMainController.onNewGame(oApp); } });
+      var menuItemResume = new sap.m.MenuItem({ icon: "sap-icon://restart", text: "Resume game", press: function () { fiveCrowns.pageMainController.onResumeGame(oApp); } });
+      var menuItemList = new sap.m.MenuItem({ icon: "sap-icon://list", text: "List games", press: function () { fiveCrowns.pageMainController.onListGames(oApp); } });
+      var menuItemSettings = new sap.m.MenuItem({ icon: "sap-icon://action-settings", text: "Settings", press: function () { fiveCrowns.pageMainController.onSettings(oApp); } });
+      var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { oApp.back(); } });
+      var menuMain = new sap.m.Menu({ items: [menuItemNew, menuItemResume, menuItemList, menuItemSettings, menuItemBack] });
       var menuButtonMain = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuMain });
+
+      // Add Header bar
       var barMainHeader = new sap.m.Toolbar({ id: "idBarMainHeader" });
       barMainHeader.addContent(menuButtonMain);
+      barMainHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
+      barMainHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
       page.setCustomHeader(barMainHeader);
 
 

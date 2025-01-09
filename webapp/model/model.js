@@ -20,7 +20,8 @@ fiveCrowns.model = (function () {
 
         // Properties
         // ====================================================
-        this.gameId = 1;
+        // this.gameId = 1;
+        this.gameId = fiveCrowns.games.getNextGameId();
         this.gameDate = new Date();
         this.gameName = this.gameDate.toString().substring(0, 24);
         this.initialDealer = 0;     // Array index. IE zero is the first player
@@ -198,7 +199,7 @@ fiveCrowns.model = (function () {
     function createTestData() {
         // Testing
         oGame = fiveCrowns.model.getModel();
-        oGame.setGameName("Saturday");
+        // oGame.setGameName("Saturday");
         oGame.setPlayerName(0, "Murray");
         oGame.setPlayerName(1, "Leisa");
         oGame.setPlayerName(2, "Diane");
@@ -227,6 +228,7 @@ fiveCrowns.model = (function () {
          */
         init: function () {
             fiveCrowns.settings.initSettings();
+            fiveCrowns.games.initGames();
             createApp();
             createGame();
             createTestData();
@@ -253,6 +255,17 @@ fiveCrowns.model = (function () {
          */
         setModel: function (oModel) {
             oGame = oModel;
+        },
+
+        /**
+         * Set model values
+         */
+        setModelValues: function (oGameValues) {
+            for (const propertyName of Object.keys(oGameValues)) {
+                if (propertyName in oGame) {
+                    oGame[propertyName] = oGameValues[propertyName];
+                }
+            }
         },
 
         /**
@@ -328,10 +341,6 @@ fiveCrowns.model = (function () {
         },
 
 
-        // Class constructor
-        Game: Game,
-
-
 
         clearScores: function () {
             clearTotals(oGame.totals);
@@ -348,6 +357,14 @@ fiveCrowns.model = (function () {
             oGame.currentRound = 0;
         },
 
+        newGame: function () {
+            // Create a new Game Id and Name
+            oGame.gameId = fiveCrowns.games.getNextGameId();
+            oGame.gameDate = new Date();
+            oGame.gameName = oGame.gameDate.toString().substring(0, 24);
+        },
+    
+    
         clearPlayers: function () {
             for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
                 oGame.players[playerNum].playerId = 0;

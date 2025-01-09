@@ -12,7 +12,6 @@ let wakeLock = null;
 
 // Function to request screen wake lock
 async function requestWakeLock() {
-    // debugger;
     try {
         // Only if wakeLock is available
         if ('wakeLock' in navigator) {
@@ -31,7 +30,6 @@ async function requestWakeLock() {
 
 // Function to release the wake lock
 async function releaseWakeLock() {
-    // debugger;
     if (wakeLock) {
         try {
             await wakeLock.release();  // Release the wake lock
@@ -48,7 +46,6 @@ async function releaseWakeLock() {
 
 // Reset the release wakeLock timeout
 function resetTimeout() {
-    // debugger;
     clearTimeout(timeoutID);  // Reset the previous timeout
     let timeoutDuration = fiveCrowns.settings.oSettings.getScreenTimeout() * 1000;
     // console.log('Timeout set for ', timeoutDuration, ' milliseconds');

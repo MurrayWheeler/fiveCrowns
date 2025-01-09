@@ -66,3 +66,10 @@
 .myToolbarFontSize .sapMText {
     font-size: 20px !important;    /* Apply font size to text, labels, and buttons inside the toolbar */
 }
+
+
+
+/* Hide the "Select All" checkbox in the header */
+.sapMListTblHeaderRow .sapMCb {
+    display: none;
+}

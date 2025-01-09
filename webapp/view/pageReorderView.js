@@ -14,17 +14,19 @@ fiveCrowns.pageReorderView = (function () {
       // Create page
       var page = new sap.m.Page("pageReorder", { title: "Reorder Players" });
 
-      // Add content
-      // var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear rounds", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
-      // var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
-      // var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { oApp.back(); } });
+      // Build menu button
+      var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageReorderController.onReorderBack(oApp); } });
 
-      // var menuReorder = new sap.m.Menu({ items: [menuItemReorder, menuItemClear, menuItemBack] });
-      // var menuButtonReorder = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuReorder });
-      var btnReorderBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageReorderController.onReorderBack(oApp); } });
+      var menuReorder = new sap.m.Menu({ items: [menuItemBack] });
+      var menuButtonReorder = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuReorder });
+
+      // Add menu etc to Header toolbar
       var barReorderHeader = new sap.m.Toolbar({ id: "idBarReorderHeader" });
-      // barReorderHeader.addContent(menuButtonReorder);
-      barReorderHeader.addContent(btnReorderBack);
+      barReorderHeader.addContent(menuButtonReorder);
+      barReorderHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
+      barReorderHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
+      barReorderHeader.addContent(new sap.m.ToolbarSpacer());
+      barReorderHeader.addContent(new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageReorderController.onReorderBack(oApp); } }));
       page.setCustomHeader(barReorderHeader);
 
 

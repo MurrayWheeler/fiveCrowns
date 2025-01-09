@@ -14,11 +14,21 @@ fiveCrowns.pageChangeDealerView = (function () {
       // Create page
       var page = new sap.m.Page("pageChangeDealer", { title: "Change Dealer" });
 
-      // Add content
-      var btnChangeDealerBack = new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageChangeDealerController.onChangeDealerBack(oApp); } });
-      var barChangeDealerHeader = new sap.m.Toolbar({ id: "idBarChangeDealerHeader" });
-      barChangeDealerHeader.addContent(btnChangeDealerBack);
-      page.setCustomHeader(barChangeDealerHeader);
+      // Build menu button
+      var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageChangeDealerController.onChangeDealerBack(oApp); } });
+
+      var menuDealer = new sap.m.Menu({ items: [menuItemBack] });
+      var menuButtonDealer = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuDealer });
+
+      // Add menu etc to Header toolbar
+      var barDealerHeader = new sap.m.Toolbar({ id: "idBarDealerHeader" });
+      barDealerHeader.addContent(menuButtonDealer);
+      barDealerHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
+      barDealerHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
+      barDealerHeader.addContent(new sap.m.ToolbarSpacer());
+      barDealerHeader.addContent(new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageChangeDealerController.onChangeDealerBack(oApp); } }));
+      page.setCustomHeader(barDealerHeader);
+
 
       // Table layout
       tabChangeDealer = new sap.m.Table({ id: "idChangeDealer", sticky: ["ColumnHeaders", "HeaderToolbar", "InfoToolbar"] });

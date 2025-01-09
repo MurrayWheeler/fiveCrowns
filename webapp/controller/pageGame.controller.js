@@ -131,6 +131,7 @@ fiveCrowns.pageGameController = (function () {
             }
         }
         row = oGame.getCurrentRound();
+        if (row >= 11) {return};   // Game finished
         switch (fiveCrowns.settings.oSettings.highlightCurrentRound) {
             case '0': break;   // Do not highlight round
             case '1':
@@ -146,7 +147,9 @@ fiveCrowns.pageGameController = (function () {
                     column = playerNum + 1;                 // Offset to step over "Round" column
                     columnLand = oGame.currentRound + 1;    // Offset to step over "Player" column (Landscape)
                     tabRounds.getItems()[row].getCells()[column].setValueState("Warning");
+                    tabRounds.getItems()[row].getCells()[column].setValueStateText("Dealer");
                     tabPlayers.getItems()[playerNum].getCells()[columnLand].setValueState("Warning");
+                    tabPlayers.getItems()[playerNum].getCells()[columnLand].setValueStateText("Dealer");
                 }
                 break;
             default: break;
@@ -217,6 +220,11 @@ fiveCrowns.pageGameController = (function () {
         },
 
         onClearScores: function () {
+            // Save game
+            fiveCrowns.games.modifyGame(fiveCrowns.model.getModel());
+            fiveCrowns.games.saveGames();
+
+            fiveCrowns.model.newGame();
             fiveCrowns.model.clearScores();
             tabRounds.getModel().refresh();
             refreshScreenTotals(fiveCrowns.model.getPlayerCount());
@@ -224,8 +232,19 @@ fiveCrowns.pageGameController = (function () {
         },
 
         onBack: function (oApp) {
-            debugger;
+            // debugger;  // Get an error going back to main page "Blocked aria-hidden on an element because its descendant retained focus."
+            // I'm not sure how to fix this error. The app works regardless
             oApp.back();
+            // sap.ui.getCore().applyChanges();
+            // document.getElementById("__item7-menuinnerlist-content").blur();
+            // oApp.to("pageMain");
+            // sap.ui.getCore().applyChanges();
+            // document.activeElement.blur();
+            // document.getElementById("playerCount-inner").focus();
+
+            // Save game
+            fiveCrowns.games.modifyGame(fiveCrowns.model.getModel());
+            fiveCrowns.games.saveGames();
         },
 
 

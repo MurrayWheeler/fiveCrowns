@@ -7,9 +7,9 @@ fiveCrowns.pageChangeDealerController = (function () {
 
     return {
 
-        //         onChangeDealer: function (element) {
-        //             debugger;            // Not used. Dealer changed on "Back" function
-        //         },
+        // onChangeDealer: function (element) {
+        //     // Not used. Dealer changed on "Back" function
+        // },
 
         onChangeDealerBack: function (oApp) {
             oGame = fiveCrowns.model.getModel();
@@ -30,7 +30,7 @@ fiveCrowns.pageChangeDealerController = (function () {
             oApp.back();
         },
 
-        
+
     };
 
 }());
