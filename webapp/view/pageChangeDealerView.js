@@ -17,15 +17,16 @@ fiveCrowns.pageChangeDealerView = (function () {
       // Build menu button
       var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageChangeDealerController.onChangeDealerBack(oApp); } });
 
-      var menuDealer = new sap.m.Menu({ items: [menuItemBack] });
+      // var menuDealer = new sap.m.Menu({ items: [menuItemBack] });
+      var menuDealer = new sap.m.Menu({ items: [] });
       var menuButtonDealer = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuDealer });
 
       // Add menu etc to Header toolbar
       var barDealerHeader = new sap.m.Toolbar({ id: "idBarDealerHeader" });
-      barDealerHeader.addContent(menuButtonDealer);
       barDealerHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
       barDealerHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
       barDealerHeader.addContent(new sap.m.ToolbarSpacer());
+      // barDealerHeader.addContent(menuButtonDealer);
       barDealerHeader.addContent(new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageChangeDealerController.onChangeDealerBack(oApp); } }));
       page.setCustomHeader(barDealerHeader);
 
@@ -53,6 +54,16 @@ fiveCrowns.pageChangeDealerView = (function () {
 
       // Add page to app
       oApp.addPage(page);
+
+      // Load custom CSS
+      jQuery.sap.includeStyleSheet("css/style.css");
+      page.addStyleClass("myCustomBackground");
+
+      tabChangeDealer.addStyleClass("myTableBackground");
+      tabChangeDealer.addStyleClass("myTableFontColor");
+      tabChangeDealer.addStyleClass("myTableFontSize");
+      tabChangeDealer.addStyleClass("myTableInputMargins");
+
 
     },
 

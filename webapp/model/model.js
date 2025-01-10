@@ -7,6 +7,7 @@ fiveCrowns.model = (function () {
     const maxPlayers = 8;
     const maxRounds = 11;
     const playerPrefix = "P";
+    const playersLocalStorage = "fiveCrowns.playesData";
 
     // var oPlayer = new Object;
     // var aPlayers = new Array;
@@ -196,15 +197,14 @@ fiveCrowns.model = (function () {
 
 
 
-    function createTestData() {
-        // Testing
+    function loadSavedData() {
         oGame = fiveCrowns.model.getModel();
-        // oGame.setGameName("Saturday");
-        oGame.setPlayerName(0, "Murray");
-        oGame.setPlayerName(1, "Leisa");
-        oGame.setPlayerName(2, "Diane");
-        oGame.setPlayerName(3, "Kay");
-        oGame.setPlayerName(4, "Austin");
+        loadPlayers(oGame);
+        // oGame.setPlayerName(0, "Murray");
+        // oGame.setPlayerName(1, "Leisa");
+        // oGame.setPlayerName(2, "Diane");
+        // oGame.setPlayerName(3, "Kay");
+        // oGame.setPlayerName(4, "Austin");
         // oGame.setScore(0, 0, 3);
         // oGame.setScore(0, 1, 6);
         // oGame.setScore(0, 2, 9);
@@ -217,11 +217,30 @@ fiveCrowns.model = (function () {
 
     };
 
+    function savePlayers(oGame) {
+        // Storing data:
+        var playersJson = JSON.stringify(oGame.players);
+        localStorage.setItem(playersLocalStorage, playersJson);
+    };
+
+    function loadPlayers(oGame) {
+        // Retrieving data:
+        let playersJson = localStorage.getItem(playersLocalStorage);
+        if (!playersJson) return;
+        let aPlayers = JSON.parse(playersJson);
+        for (let playerNum = 0; playerNum < aPlayers.length; playerNum++) {
+            if (playerNum > oGame.players.length) { break }
+            oGame.players[playerNum].playerName = aPlayers[playerNum].playerName;
+        }
+    };
+
 
 
 
     return {
 
+        savePlayers: savePlayers,
+        loadPlayers: loadPlayers,
 
         /**
          * Initialise model
@@ -232,7 +251,7 @@ fiveCrowns.model = (function () {
             fiveCrowns.games.initGames();
             createApp();
             createGame();
-            createTestData();
+            loadSavedData();
             fiveCrowns.eventHandler.registerEvents();
             // fiveCrowns.eventHandler.registerEvents(oEvent);
         },
@@ -364,8 +383,8 @@ fiveCrowns.model = (function () {
             oGame.gameDate = new Date();
             oGame.gameName = oGame.gameDate.toString().substring(0, 24);
         },
-    
-    
+
+
         clearPlayers: function () {
             for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
                 oGame.players[playerNum].playerId = 0;

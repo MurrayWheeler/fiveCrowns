@@ -17,15 +17,15 @@ fiveCrowns.pageSettingsView = (function () {
       // Build menu button
       var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageSettingsController.onSettingsBack(oApp); } });
 
-      var menuSettings = new sap.m.Menu({ items: [menuItemBack] });
+      var menuSettings = new sap.m.Menu({ items: [] });
       var menuButtonSettings = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuSettings });
 
       // Add menu etc to Header toolbar
       var barSettingsHeader = new sap.m.Toolbar({ id: "idBarSettingsHeader" });
-      barSettingsHeader.addContent(menuButtonSettings);
       barSettingsHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
       barSettingsHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
       barSettingsHeader.addContent(new sap.m.ToolbarSpacer());
+      // barSettingsHeader.addContent(menuButtonSettings);
       barSettingsHeader.addContent(new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageSettingsController.onSettingsBack(oApp); } }));
       page.setCustomHeader(barSettingsHeader);
 
@@ -51,6 +51,11 @@ fiveCrowns.pageSettingsView = (function () {
 
       // Add page to app
       oApp.addPage(page);
+
+      // Load custom CSS
+      jQuery.sap.includeStyleSheet("css/style.css");
+      page.addStyleClass("myCustomBackground");
+      frmSettings.addStyleClass("myLabelFontColor");
 
     },
 

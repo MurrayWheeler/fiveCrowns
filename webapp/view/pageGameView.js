@@ -38,24 +38,36 @@ fiveCrowns.pageGameView = (function () {
       var page = new sap.m.Page("pageGame", { title: "Game page" });
 
 
-      // Build menu button
-      var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
-      var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
-      var menuItemDealer = new sap.m.MenuItem({ icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.pageGameController.onDealerChange(oApp); } });
-      // var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { oApp.back(); } });
-      var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageGameController.onBack(oApp); } });
-      var menuItemRefresh = new sap.m.MenuItem({ icon: "sap-icon://refresh", text: "Refresh", press: function () { fiveCrowns.pageGameController.onGameRefresh(); } });
+      // // Build menu button
+      // var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
+      // var menuItemDealer = new sap.m.MenuItem({ icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.pageGameController.onDealerChange(oApp); } });
+      // var menuItemNew = new sap.m.MenuItem({ icon: "sap-icon://media-play", text: "New Game", press: function () { fiveCrowns.pageGameController.onNewGame(); } });
+      // var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
+      // var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageGameController.onBack(oApp); } });
+      // // debugger; // Remove refresh option later after testing  
+      // // var menuItemRefresh = new sap.m.MenuItem({ icon: "sap-icon://refresh", text: "Refresh", press: function () { fiveCrowns.pageGameController.onGameRefresh(); } });
+      // // var menuGame = new sap.m.Menu({ items: [menuItemReorder, menuItemClear, menuItemBack, menuItemRefresh] });
+      // var menuGame = new sap.m.Menu({ items: [menuItemReorder, menuItemDealer, menuItemNew, menuItemClear] });
+      // var menuButton = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuGame });
+
+      // Use popover, so it does not go to small screen on a mobile
+      var menuButtonReorder = new sap.m.Button({ type: "Transparent", icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
+      var menuButtonDealer = new sap.m.Button({ type: "Transparent", icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.pageGameController.onDealerChange(oApp); } });
+      var menuButtonNew = new sap.m.Button({ type: "Transparent", icon: "sap-icon://media-play", text: "New Game", press: function () { fiveCrowns.pageGameController.onNewGame(); } });
+      var menuButtonClear = new sap.m.Button({ type: "Transparent", icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
       // debugger; // Remove refresh option later after testing  
-      // var menuGame = new sap.m.Menu({ items: [menuItemReorder, menuItemClear, menuItemBack, menuItemRefresh] });
-      var menuGame = new sap.m.Menu({ items: [menuItemReorder, menuItemDealer, menuItemClear, menuItemBack] });
-      var menuButtonGame = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuGame });
+      // var menuButtonRefresh = new sap.m.Button({ type: "Transparent", icon: "sap-icon://refresh", text: "Refresh", press: function () { fiveCrowns.pageGameController.onGameRefresh(); } });
+      var vboxMenu = new sap.m.VBox({ items: [menuButtonReorder, menuButtonDealer, menuButtonNew, menuButtonClear] });
+      var popoverMenu = new sap.m.Popover({ title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
+      var menuButton = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverMenu.openBy(menuButton); } });
+
 
       // Add menu etc to Header toolbar
       var barGameHeader = new sap.m.Toolbar({ id: "idBarGameHeader" });
-      barGameHeader.addContent(menuButtonGame);
       barGameHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
       barGameHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
       barGameHeader.addContent(new sap.m.ToolbarSpacer());
+      barGameHeader.addContent(menuButton);
       barGameHeader.addContent(new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageGameController.onBack(oApp); } }));
       page.setCustomHeader(barGameHeader);
 
@@ -104,7 +116,7 @@ fiveCrowns.pageGameView = (function () {
 
       // Add cells
       colListItem = new sap.m.ColumnListItem({});
-      colListItem.addCell(new sap.m.Text({ id: "roundId", text: "{round}" }));
+      colListItem.addCell(new sap.m.Text({ id: "roundId", text: "{round}", wrapping: false }));
       // colListItem.addCell(new sap.m.Input({ value: "{s0}", type: "Number", styleClass: "sapUiSizeCompact", change: function(){fiveCrowns.pageGameController.onScoreChange()} }));   
       // colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
       colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
@@ -152,6 +164,7 @@ fiveCrowns.pageGameView = (function () {
       tabRounds.addStyleClass("myTableFontColor");
       tabRounds.addStyleClass("myTableFontSize");
       tabRounds.addStyleClass("myTableInputMargins");
+      tabRounds.addStyleClass("myTruncateStyle");
 
       barTotal.addStyleClass("myToolbarFontSize");
       barTotal.addStyleClass("myTableInputMargins");

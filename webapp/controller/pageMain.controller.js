@@ -26,6 +26,7 @@ fiveCrowns.pageMainController = (function () {
 
     function gotoList(oApp) {
         requestFullScreen();
+        tabGames.getModel().refresh();
         oApp.to("pageGames");
     };
 
@@ -34,22 +35,19 @@ fiveCrowns.pageMainController = (function () {
 
     return {
 
+        gotoGame: gotoGame,
+
         onPlayButton: function (oApp) {
             fiveCrowns.model.clearScores();
+            // fiveCrowns.model.clearPlayers();   // Use the previously used player names
             fiveCrowns.model.setPlayerCount(playerCount.getValue());   // Get player count from screen
             fiveCrowns.model.newGame();
-            gotoGame(oApp);
-        },
-
-        onNewGame: function (oApp) {
-            fiveCrowns.model.clearScores();
-            fiveCrowns.model.clearPlayers();
-            fiveCrowns.model.setPlayerCount(playerCount.getValue());   // Get player count from screen
-            fiveCrowns.model.newGame();
+            fiveCrowns.pageGameController.setGameEditable(true);
             gotoGame(oApp);
         },
 
         onResumeGame: function (oApp) {
+            fiveCrowns.pageGameController.setGameEditable(true);
             gotoGame(oApp);
         },
 

@@ -17,15 +17,15 @@ fiveCrowns.pageReorderView = (function () {
       // Build menu button
       var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageReorderController.onReorderBack(oApp); } });
 
-      var menuReorder = new sap.m.Menu({ items: [menuItemBack] });
+      var menuReorder = new sap.m.Menu({ items: [] });
       var menuButtonReorder = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuReorder });
 
       // Add menu etc to Header toolbar
       var barReorderHeader = new sap.m.Toolbar({ id: "idBarReorderHeader" });
-      barReorderHeader.addContent(menuButtonReorder);
       barReorderHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
       barReorderHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
       barReorderHeader.addContent(new sap.m.ToolbarSpacer());
+      // barReorderHeader.addContent(menuButtonReorder);
       barReorderHeader.addContent(new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageReorderController.onReorderBack(oApp); } }));
       page.setCustomHeader(barReorderHeader);
 
@@ -82,6 +82,15 @@ fiveCrowns.pageReorderView = (function () {
 
       // Add page to app
       oApp.addPage(page);
+
+      // Load custom CSS
+      jQuery.sap.includeStyleSheet("css/style.css");
+      page.addStyleClass("myCustomBackground");
+
+      tabReorder.addStyleClass("myTableBackground");
+      tabReorder.addStyleClass("myTableFontColor");
+      tabReorder.addStyleClass("myTableFontSize");
+      tabReorder.addStyleClass("myTableInputMargins");
 
     },
 

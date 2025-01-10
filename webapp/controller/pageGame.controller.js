@@ -131,7 +131,7 @@ fiveCrowns.pageGameController = (function () {
             }
         }
         row = oGame.getCurrentRound();
-        if (row >= 11) {return};   // Game finished
+        if (row >= 11) { return };   // Game finished
         switch (fiveCrowns.settings.oSettings.highlightCurrentRound) {
             case '0': break;   // Do not highlight round
             case '1':
@@ -221,9 +221,22 @@ fiveCrowns.pageGameController = (function () {
 
         onClearScores: function () {
             // Save game
-            fiveCrowns.games.modifyGame(fiveCrowns.model.getModel());
+            oGame = fiveCrowns.model.getModel();
+            fiveCrowns.games.modifyGame(oGame);
             fiveCrowns.games.saveGames();
+            fiveCrowns.model.savePlayers(oGame);
+            fiveCrowns.model.clearScores();
+            tabRounds.getModel().refresh();
+            refreshScreenTotals(fiveCrowns.model.getPlayerCount());
+            tabRounds.scrollToIndex(0);
+        },
 
+        onNewGame: function () {
+            // Save game
+            oGame = fiveCrowns.model.getModel();
+            fiveCrowns.games.modifyGame(oGame);
+            fiveCrowns.games.saveGames();
+            fiveCrowns.model.savePlayers(oGame);
             fiveCrowns.model.newGame();
             fiveCrowns.model.clearScores();
             tabRounds.getModel().refresh();
@@ -243,9 +256,17 @@ fiveCrowns.pageGameController = (function () {
             // document.getElementById("playerCount-inner").focus();
 
             // Save game
-            fiveCrowns.games.modifyGame(fiveCrowns.model.getModel());
+            oGame = fiveCrowns.model.getModel();
+            fiveCrowns.games.modifyGame(oGame);
             fiveCrowns.games.saveGames();
+            fiveCrowns.model.savePlayers(oGame);
         },
+
+        setGameEditable: function (isEditable) {
+            setTableEditable(tabRounds, isEditable);
+            setTableEditable(tabPlayers, isEditable);
+        },
+
 
 
     };

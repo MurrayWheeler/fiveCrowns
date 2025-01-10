@@ -60,7 +60,9 @@ fiveCrowns.games = (function () {
         var oTempGame = JSON.parse(JSON.stringify(oGame));
         // Add or Modify
         if (gameIndex == -1) {
-            oGames.game.push(oTempGame);
+            // oGames.game.push(oTempGame);
+            // Insert at the front of the array. So the latest appears at the top of the list
+            oGames.game.unshift(oTempGame);
         } else {
             oGames.game[gameIndex] = oTempGame;
         }

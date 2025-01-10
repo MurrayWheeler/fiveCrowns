@@ -4,72 +4,139 @@
 
 .myCustomBackground {
     /*    background-color: rebeccapurple !important; /* !important ensures it overrides default styles */
-    background-color: #740190 !important;     /* !important ensures it overrides default styles */
+    background-color: #740190 !important;
+    /* !important ensures it overrides default styles */
 }
 
 .myTableBackground .sapMListTblRow {
     background-color: #740190 !important;
 }
-.myTableBackground .sapMListTblHeader {    /* This does not seem to be working.???? */
+
+.myTableBackground .sapMListTblHeader {
+    /* This does not seem to be working.???? */
     background-color: #740190 !important;
 }
 
 .myTableFontColor {
-    color: yellow !important;    /* Change font color for all text in the table */
+    color: yellow !important;
+    /* Change font color for all text in the table */
 }
+
 .myTableFontColor .sapMText {
-    color: yellow !important;    /* Ensure text inside cells is also styled */
+    color: yellow !important;
+    /* Ensure text inside cells is also styled */
 }
+
+.myTableFontColor .sapMButton {
+    color: yellow !important;
+    /* Ensure text inside cells is also styled */
+}
+
 .myTableFontColor .sapMListTblHeader .sapMText {
-    color: black !important;    /* Ensure text inside cells is also styled */
+    color: black !important;
+    /* Ensure text inside cells is also styled */
 }
+
 .myTableFontColor .sapMListTblHeader .sapMInputBaseInner {
-    color: black !important;    /* Ensure text inside cells is also styled */
+    color: black !important;
+    /* Ensure text inside cells is also styled */
+}
+
+.myLabelFontColor {
+    color: yellow !important;
+    /* Ensure text inside cells is also styled */
+}
+
+.myLabelFontColor .sapMLabel {
+    color: yellow !important;
+    /* Ensure text inside cells is also styled */
+}
+
+.myLabelFontColor .sapUiFormTitle {
+    color: yellow !important;
+    /* Ensure text inside cells is also styled */
+}
+
+.myButtonFontColor .sapMBtnInner {
+    color: yellow !important;
+    /* Ensure text inside cells is also styled */
 }
 
 
 .myTableFontSize {
-    font-size: 20px !important;    /* Set font size for the entire table */
+    font-size: 20px !important;
+    /* Set font size for the entire table */
 }
+
 .myTableFontSize .sapMText {
-    font-size: 20px !important;    /* Ensure text in table cells has the desired size */
+    font-size: 20px !important;
+    /* Ensure text in table cells has the desired size */
 }
+
 .myTableFontSize .sapMInputBaseInner {
-    font-size: 20px !important;    /* Ensure text in table cells has the desired size */
+    font-size: 20px !important;
+    /* Ensure text in table cells has the desired size */
 }
+
 .myTableFontSize .sapMListTblHeader .sapMText {
-    font-size: 20px !important;    /* Set font size for table headers */
+    font-size: 20px !important;
+    /* Set font size for table headers */
 }
+
 .myTableFontSize .sapMListTblHeader .sapMInputBaseInner {
-    font-size: 20px !important;    /* Set font size for table headers */
+    font-size: 20px !important;
+    /* Set font size for table headers */
+}
+
+.myLabelFontSize {
+    font-size: 20px !important;
+    /* Set font size for the entire table */
+}
+
+.myInputFontSize .sapMInputBaseInner {
+    font-size: 20px !important;
+    /* Set font size for the entire table */
+}
+
+.myButtonFontSize .sapMBtnInner {
+    font-size: 20px !important;
+    /* Set font size for the entire table */
 }
 
 
-.myTableInputMargins .sapMInput {
-    margin: 1px !important;     /* Adjust the margins as needed */
-    text-align: center;         /* Center-align the text */
-    padding: 1px !important;    /* Adjust the padding as needed */
-}
+.myTableInputMargins .sapMInput,
 .myTableInputMargins .sapMInputBaseInner {
-    margin: 1px !important;    /* Adjust the margins as needed */
-    text-align: center;        /* Center-align the text */
-    padding: 1px !important;   /* Adjust the padding as needed */
+    margin: 1px !important;
+    /* Adjust the margins as needed */
+    text-align: center;
+    /* Center-align the text */
+    padding: 1px !important;
+    /* Adjust the padding as needed */
 }
 
 
 /* .myToolbarFontSize .sapMToolbar { */
-    /* font-size: 20px !important;   /* Set your desired font size */
+/* font-size: 20px !important;   /* Set your desired font size */
 /* } */
 .myToolbarFontSize .sapMLabel,
 .myToolbarFontSize .sapMButton,
 .myToolbarFontSize .sapMInputBaseInner,
 .myToolbarFontSize .sapMText {
-    font-size: 20px !important;    /* Apply font size to text, labels, and buttons inside the toolbar */
+    font-size: 20px !important;
+    /* Apply font size to text, labels, and buttons inside the toolbar */
 }
 
 
+.myTruncateStyle .sapMListTblHeader .sapMInputBaseInner,
+.myTruncateStyle .sapMText {
+    white-space: nowrap;     /* Prevent wrapping */
+    overflow: hidden;        /* Hide overflow */
+    text-overflow: clip;     /* No ellipsis, just cut off the text */
+}
 
-/* Hide the "Select All" checkbox in the header */
-.sapMListTblHeaderRow .sapMCb {
-    display: none;
+
+.myMenuStyle,
+.myMenuStyle .sapMText,
+.myMenuStyle .sapMMenuItem {
+        color: yellow;
 }
