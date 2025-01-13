@@ -60,6 +60,27 @@ fiveCrowns.pageMainController = (function () {
             oApp.to("pageSettings");
         },
 
+        onAbout: function (oApp) {
+            requestFullScreen();
+            sap.ui.getCore().byId("popoverMain").close()
+            sap.m.MessageToast.show("Five Crowns v0.01 (Beta)");
+            // Popover? or page?
+            // oApp.to("pageAbout");
+        },
+
+        onHelp: function (oApp) {
+            requestFullScreen();
+            sap.ui.getCore().byId("popoverMain").close()
+            sap.m.MessageToast.show("Help is not yet available");
+            // oApp.to("pageHelp");
+        },
+
+        onInstr: function (oApp) {
+            requestFullScreen();
+            // sap.ui.getCore().byId("popoverMain").close()
+            oApp.to("pageInstr");
+        },
+
 
     };
 

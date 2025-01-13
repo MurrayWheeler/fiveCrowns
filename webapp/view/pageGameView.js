@@ -155,6 +155,92 @@ fiveCrowns.pageGameView = (function () {
       oApp.addPage(page);
 
 
+      // // Attach long press to the table header
+      // tabRounds.addEventDelegate({
+      //   onAfterRendering: function () {
+      //     // Get the header DOM element
+      //     var oHeaderDom = tabRounds.$().find(".sapMListTblHdr");
+
+      //     if (oHeaderDom.length) {
+      //       $(oHeaderDom).on("touchstart", function () {
+      //         var pressTimer;
+
+      //         // Start a timer for the long press
+      //         pressTimer = setTimeout(function () {
+      //           sap.m.MessageToast.show("Long press detected on the table header!");
+      //         }, 800); // 800ms for long press
+
+      //         // Cancel the timer on touchend or touchmove
+      //         $(this).on("touchend touchmove", function () {
+      //           clearTimeout(pressTimer);
+      //           $(this).off("touchend touchmove"); // Avoid multiple bindings
+      //         });m
+      //       });
+      //     }
+      //   }
+      // });
+
+
+      // // Add double click event to header cells. This is used to change dealer
+      // // Iterate through all rows and attach the double-click event to input fields
+      // var aColumns = tabRounds.getColumns();
+      // aColumns.forEach(function (oColumn) {
+      //   if (oColumn.getHeader() instanceof sap.m.Input) {
+      //     oColumn.getHeader().attachBrowserEvent("dblclick", function () {
+      //       sap.m.MessageToast.show("Input in row " + oColumn.getId() + " double-clicked!");
+      //     })
+      //   }
+      // });
+
+      // // Iterate through all rows and attach the double-click event to input fields
+      // var aItems = tabRounds.getItems();
+      // aItems.forEach(function (oItem) {
+      //   var oInput = oItem.getCells()[1]; // Assuming the input field is in the second column
+      //   if (oInput instanceof sap.m.Input) {
+      //     oInput.attachBrowserEvent("dblclick", function () {
+      //       sap.m.MessageToast.show("Input in row " + oItem.getId() + " double-clicked!");
+      //     });
+      //   }
+      // });
+
+      // tabRounds.attachUpdateFinished(function () {
+      //   var aItems = tabRounds.getItems();
+      //   aItems.forEach(function (oItem) {
+      //     var oInput = oItem.getCells()[1]; // Assuming the input field is in the second column
+      //     var aCells = oItem.getCells();
+      //     aCells.forEach(function (oCell) {
+      //       if (oCell instanceof sap.m.Input) {
+      //         oCell.attachBrowserEvent("dblclick", function () {
+      //           sap.m.MessageToast.show("Double-clicked on input: " + oInput.getValue());
+      //         });
+      //       }
+      //     });
+      //   }
+      //   )
+      // });
+
+
+      // // Attach a double-click browser event to the table
+      // tabRounds.attachUpdateFinished(function () {
+      //   tabRounds.attachBrowserEvent("dblclick", function (oEvent) {
+      //     var oTarget = oEvent.target; // The DOM element clicked
+      //     var oBindingContext = sap.ui.getCore().byId(oTarget.id)?.getBindingContext();
+
+      //     if (oBindingContext) {
+      //       var oData = oBindingContext.getObject(); // Retrieve the data of the clicked row
+      //       sap.m.MessageToast.show("Double-clicked on row: " + JSON.stringify(oData));
+      //     } else {
+      //       sap.m.MessageToast.show("Double-clicked on the table, but no row detected.");
+      //     }
+      //   });
+      // });
+
+
+
+
+
+
+
 
       // Load custom CSS
       jQuery.sap.includeStyleSheet("css/style.css");

@@ -200,26 +200,14 @@ fiveCrowns.model = (function () {
     function loadSavedData() {
         oGame = fiveCrowns.model.getModel();
         loadPlayers(oGame);
-        // oGame.setPlayerName(0, "Murray");
-        // oGame.setPlayerName(1, "Leisa");
-        // oGame.setPlayerName(2, "Diane");
-        // oGame.setPlayerName(3, "Kay");
-        // oGame.setPlayerName(4, "Austin");
-        // oGame.setScore(0, 0, 3);
-        // oGame.setScore(0, 1, 6);
-        // oGame.setScore(0, 2, 9);
-        // oGame.setScore(1, 0, 4);
-        // oGame.setScore(1, 1, 7);
-        // oGame.setScore(1, 2, 0);
-        // oGame.setScore(2, 0, 5);
-        // oGame.setScore(2, 1, 8);
-        // oGame.setScore(2, 2, 1);
-
     };
 
     function savePlayers(oGame) {
         // Storing data:
-        var playersJson = JSON.stringify(oGame.players);
+        var oPlayerInfo = {};
+        oPlayerInfo.players = oGame.players;
+        oPlayerInfo.playerCount = oGame.playerCount;
+        var playersJson = JSON.stringify(oPlayerInfo);
         localStorage.setItem(playersLocalStorage, playersJson);
     };
 
@@ -227,10 +215,12 @@ fiveCrowns.model = (function () {
         // Retrieving data:
         let playersJson = localStorage.getItem(playersLocalStorage);
         if (!playersJson) return;
-        let aPlayers = JSON.parse(playersJson);
-        for (let playerNum = 0; playerNum < aPlayers.length; playerNum++) {
+        let oPlayerInfo = JSON.parse(playersJson);
+        if (!oPlayerInfo.playerCount) return;
+        oGame.playerCount = oPlayerInfo.playerCount;
+        for (let playerNum = 0; playerNum < oPlayerInfo.players.length; playerNum++) {
             if (playerNum > oGame.players.length) { break }
-            oGame.players[playerNum].playerName = aPlayers[playerNum].playerName;
+            oGame.players[playerNum].playerName = oPlayerInfo.players[playerNum].playerName;
         }
     };
 
@@ -246,7 +236,7 @@ fiveCrowns.model = (function () {
          * Initialise model
          */
         init: function () {
-            requestFullScreen();
+            // requestFullScreen();
             fiveCrowns.settings.initSettings();
             fiveCrowns.games.initGames();
             createApp();
