@@ -97,10 +97,46 @@ fiveCrowns.pageGameLandscapeView = (function () {
       // Add page to app
       oApp.addPage(page);
 
-      // var oModel = new sap.ui.model.json.JSONModel(_oData);
-      // this._oTable.setModel(oModel);
+      
+            // Detect long press in table
+      tabPlayers.addEventDelegate({
+        onAfterRendering: function () {
+          tabPlayers.$().on("touchstart", "tr", function (oEvent) {
+            var pressTimer;
+            var $target = $(this); // jQuery object for the row
+            var eventTarget = oEvent.target;
 
-      // Not tested. I got this from chatGPT
+            // Start a timer for the long press
+            pressTimer = setTimeout(function () {
+              var oRow = sap.ui.getCore().byId($target.attr("id"));
+              if (oRow && oRow.getBindingContext()) {
+                var oData = oRow.getBindingContext().getObject();
+                var cell = eventTarget.closest("td, th"); // Find the nearest cell
+                var columnIndex = Array.from(cell.parentElement.children).indexOf(cell)
+                if (columnIndex == 1) {   // Only long press on column 1, Player Name
+                var playerNum = oData.playerPosition - 1;
+                fiveCrowns.pageChangeDealerController.setDealer(playerNum);
+              }
+            }
+            }, 1500); // milliseconds for long press
+            // Cancel the timer on touchend or touchmove
+            $target.on("touchend touchmove", function () {
+              clearTimeout(pressTimer);
+              $target.off("touchend touchmove"); // Prevent multiple bindings
+            });
+          });
+        }
+      });
+
+
+
+
+
+
+
+
+
+      // Not tested. I got this from chatGPT. Looks like it is trying to set the tab index. This isn't working. Left for reference
       // debugger;
 
       // tabPlayers.addEventDelegate({

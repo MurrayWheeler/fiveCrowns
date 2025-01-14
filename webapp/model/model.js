@@ -4,7 +4,7 @@ var fiveCrowns = {};
 
 fiveCrowns.model = (function () {
 
-    const maxPlayers = 8;
+    const maxPlayers = 7;
     const maxRounds = 11;
     const playerPrefix = "P";
     const playersLocalStorage = "fiveCrowns.playesData";
@@ -26,7 +26,7 @@ fiveCrowns.model = (function () {
         this.gameDate = new Date();
         this.gameName = this.gameDate.toString().substring(0, 24);
         this.initialDealer = 0;     // Array index. IE zero is the first player
-        this.currentDealer = 0;            // Array index
+        this.currentDealer = 0;     // Array index
         this.currentRound = 0;      // Array index
         this.playerCount = 0;
         this.players = new Array;
@@ -40,13 +40,13 @@ fiveCrowns.model = (function () {
                 t0: 0
             });
         };
-        // Scores: 11 rounds x 8 players
+        // Scores: 11 rounds x maxPlayers
         this.rounds = new Array;
         for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
             roundName = getRoundName(roundNum);
             this.rounds.push({ round: roundName, s0: '', s1: '', s2: '', s3: '', s4: '', s5: '', s6: '', s7: '' });
         };
-        // Scores: 11 rounds x 8 players
+        // Scores: 11 rounds x maxPlayers
         this.scores = new Array;
         for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
             roundScores = new Array;
@@ -219,7 +219,7 @@ fiveCrowns.model = (function () {
         if (!oPlayerInfo.playerCount) return;
         oGame.playerCount = oPlayerInfo.playerCount;
         for (let playerNum = 0; playerNum < oPlayerInfo.players.length; playerNum++) {
-            if (playerNum > oGame.players.length) { break }
+            if (playerNum >= oGame.players.length) { break }
             oGame.players[playerNum].playerName = oPlayerInfo.players[playerNum].playerName;
         }
     };
