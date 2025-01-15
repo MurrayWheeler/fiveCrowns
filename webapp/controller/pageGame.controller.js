@@ -161,8 +161,12 @@ fiveCrowns.pageGameController = (function () {
                 var playerNum = elementId.split('-')[2];
             }
             fiveCrowns.model.updatePlayerName(playerNum, playerName);
-            tabPlayers.getModel().refresh();
             refreshPlayerNames(players);
+            if (sap.ui.Device.orientation.portrait) {
+                tabRounds.getModel().refresh();
+            } else {
+                tabPlayers.getModel().refresh();
+            }
         },
 
         onScoreChange: function (element) {
@@ -193,28 +197,41 @@ fiveCrowns.pageGameController = (function () {
         // },
 
         onReorderPlayers: function (oApp) {
+            if (sap.ui.Device.orientation.portrait) {
+                sap.ui.getCore().byId("popoverGame").close()
+            } else {
+                sap.ui.getCore().byId("popoverGameL").close()
+            }
             setReorderTable();
             oApp.to("pageReorder", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
         onDealerChange: function (oApp) {
+            if (sap.ui.Device.orientation.portrait) {
+                sap.ui.getCore().byId("popoverGame").close()
+            } else {
+                sap.ui.getCore().byId("popoverGameL").close()
+            }
             setChangeDealerTable();
             oApp.to("pageChangeDealer", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
         onClearScores: function () {
             // Save game
-            sap.ui.getCore().byId("popoverGame").close()
-            sap.ui.getCore().byId("popoverGameL").close()
             oGame = fiveCrowns.model.getModel();
             fiveCrowns.games.modifyGame(oGame);
             fiveCrowns.games.saveGames();
             fiveCrowns.model.savePlayers(oGame);
             fiveCrowns.model.clearScores();
-            tabRounds.getModel().refresh();
-            tabPlayers.getModel().refresh();
-            refreshScreenTotals(fiveCrowns.model.getPlayerCount());
-            tabRounds.scrollToIndex(0);
+            if (sap.ui.Device.orientation.portrait) {
+                sap.ui.getCore().byId("popoverGame").close()
+                tabRounds.getModel().refresh();
+                tabRounds.scrollToIndex(0);
+                refreshScreenTotals(fiveCrowns.model.getPlayerCount());
+            } else {
+                sap.ui.getCore().byId("popoverGameL").close()
+                tabPlayers.getModel().refresh();
+            }
         },
 
         onNewGame: function () {
@@ -225,14 +242,22 @@ fiveCrowns.pageGameController = (function () {
             fiveCrowns.model.savePlayers(oGame);
             fiveCrowns.model.newGame();
             fiveCrowns.model.clearScores();
-            tabRounds.getModel().refresh();
-            refreshScreenTotals(fiveCrowns.model.getPlayerCount());
-            tabRounds.scrollToIndex(0);
+            if (sap.ui.Device.orientation.portrait) {
+                sap.ui.getCore().byId("popoverGame").close()
+                tabRounds.getModel().refresh();
+                refreshScreenTotals(fiveCrowns.model.getPlayerCount());
+                tabRounds.scrollToIndex(0);
+            } else {
+                sap.ui.getCore().byId("popoverGameL").close()
+                tabPlayers.getModel().refresh();
+                tabPlayers.scrollToIndex(0);
+            }
         },
 
         onBack: function (oApp) {
-            sap.ui.getCore().byId("popoverGame").close()
-            sap.ui.getCore().byId("popoverGameL").close()
+            if (sap.ui.Device.orientation.landscape) {
+                sap.ui.getCore().byId("popoverGameL").close()
+            }
             oApp.back();
             // Save game
             oGame = fiveCrowns.model.getModel();
