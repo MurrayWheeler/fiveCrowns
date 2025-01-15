@@ -204,12 +204,15 @@ fiveCrowns.pageGameController = (function () {
 
         onClearScores: function () {
             // Save game
+            sap.ui.getCore().byId("popoverGame").close()
+            sap.ui.getCore().byId("popoverGameL").close()
             oGame = fiveCrowns.model.getModel();
             fiveCrowns.games.modifyGame(oGame);
             fiveCrowns.games.saveGames();
             fiveCrowns.model.savePlayers(oGame);
             fiveCrowns.model.clearScores();
             tabRounds.getModel().refresh();
+            tabPlayers.getModel().refresh();
             refreshScreenTotals(fiveCrowns.model.getPlayerCount());
             tabRounds.scrollToIndex(0);
         },
@@ -228,7 +231,8 @@ fiveCrowns.pageGameController = (function () {
         },
 
         onBack: function (oApp) {
-            sap.ui.getCore().byId("popoverMain").close()
+            sap.ui.getCore().byId("popoverGame").close()
+            sap.ui.getCore().byId("popoverGameL").close()
             oApp.back();
             // Save game
             oGame = fiveCrowns.model.getModel();

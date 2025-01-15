@@ -24,8 +24,8 @@ fiveCrowns.pageGameLandscapeView = (function () {
       var menuButtonClear = new sap.m.Button({ type: "Transparent", icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
       var menuButtonBack = new sap.m.Button({ type: "Transparent", icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageGameController.onBack(oApp); } });
       var vboxMenu = new sap.m.VBox({ items: [menuButtonReorder, menuButtonDealer, menuButtonNew, menuButtonClear, menuButtonBack] });
-      var popoverMenu = new sap.m.Popover({ title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
-      var menuButton = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverMenu.openBy(menuButton); } });
+      var popoverGameL = new sap.m.Popover({ id:"popoverGameL", title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
+      var menuButton = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverGameL.openBy(menuButton); } });
 
 
 

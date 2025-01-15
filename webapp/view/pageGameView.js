@@ -44,8 +44,8 @@ fiveCrowns.pageGameView = (function () {
       var menuButtonNew = new sap.m.Button({ type: "Transparent", icon: "sap-icon://media-play", text: "New Game", press: function () { fiveCrowns.pageGameController.onNewGame(); } });
       var menuButtonClear = new sap.m.Button({ type: "Transparent", icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
       var vboxMenu = new sap.m.VBox({ items: [menuButtonReorder, menuButtonDealer, menuButtonNew, menuButtonClear] });
-      var popoverMenu = new sap.m.Popover({ title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
-      var menuButton = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverMenu.openBy(menuButton); } });
+      var popoverGame = new sap.m.Popover({ id:"popoverGame", title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
+      var menuButton = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverGame.openBy(menuButton); } });
 
 
       // Add menu etc to Header toolbar
