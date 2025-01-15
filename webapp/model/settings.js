@@ -12,10 +12,13 @@ fiveCrowns.settings = (function () {
         // Properties
         // ====================================================
         this.playerPrefix = "P";
-        this.highlightCurrentRound = '1';
         this.defaultPlayerCount = 3;
         this.screenTimeout = 300;
-        this.orientation = 'P';   // For testing
+        // this.pageTransition = "slide";
+        this.pageTransition = "baseSlide";
+        // this.pageTransition = "fade";
+        // this.pageTransition = "flip";
+        // this.pageTransition = "show";
 
 
         // Methods
@@ -36,6 +39,10 @@ fiveCrowns.settings = (function () {
 
         this.setScreenTimeout = function (screenTimeout) {
             this.screenTimeout = screenTimeout;
+        }
+
+        this.getPageTransition = function () {
+            return this.pageTransition;
         }
 
 

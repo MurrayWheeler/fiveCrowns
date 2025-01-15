@@ -61,14 +61,7 @@ fiveCrowns.pageGameLandscapeView = (function () {
           roundName = rounds[roundNum].round;
         }
         roundHeaderId = 'roundName-' + roundNum;
-        tabPlayers.addColumn(new sap.m.Column(
-          {
-            header: new sap.m.Text({
-              id: roundHeaderId,
-              text: roundName
-            })
-          }
-        ));
+        tabPlayers.addColumn(new sap.m.Column({ header: new sap.m.Text({ id: roundHeaderId, text: roundName, wrapping: false }) } ));
       }
       tabPlayers.addColumn(new sap.m.Column({ header: new sap.m.Text({ id: "idLTotal", text: "Total" }) }));
 
@@ -277,6 +270,7 @@ fiveCrowns.pageGameLandscapeView = (function () {
       tabPlayers.addStyleClass("myTableFontColor");
       tabPlayers.addStyleClass("myTableFontSize");
       // barTotal.addStyleClass("myToolbarFontSize");
+      tabPlayers.addStyleClass("myTruncateStyle");
 
 
     },

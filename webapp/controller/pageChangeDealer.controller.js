@@ -20,10 +20,6 @@ fiveCrowns.pageChangeDealerController = (function () {
 
     return {
 
-        // onChangeDealer: function (element) {
-        //     // Not used. Dealer changed on "Back" function
-        // },
-
         onChangeDealerBack: function (oApp) {
             // oGame = fiveCrowns.model.getModel();
             oChangeDealer = fiveCrowns.model.getChangeDealerModel();

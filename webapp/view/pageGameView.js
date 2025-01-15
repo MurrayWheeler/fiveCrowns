@@ -38,25 +38,11 @@ fiveCrowns.pageGameView = (function () {
       var page = new sap.m.Page("pageGame", { title: "Game page" });
 
 
-      // // Build menu button
-      // var menuItemReorder = new sap.m.MenuItem({ icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
-      // var menuItemDealer = new sap.m.MenuItem({ icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.pageGameController.onDealerChange(oApp); } });
-      // var menuItemNew = new sap.m.MenuItem({ icon: "sap-icon://media-play", text: "New Game", press: function () { fiveCrowns.pageGameController.onNewGame(); } });
-      // var menuItemClear = new sap.m.MenuItem({ icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
-      // var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageGameController.onBack(oApp); } });
-      // // debugger; // Remove refresh option later after testing  
-      // // var menuItemRefresh = new sap.m.MenuItem({ icon: "sap-icon://refresh", text: "Refresh", press: function () { fiveCrowns.pageGameController.onGameRefresh(); } });
-      // // var menuGame = new sap.m.Menu({ items: [menuItemReorder, menuItemClear, menuItemBack, menuItemRefresh] });
-      // var menuGame = new sap.m.Menu({ items: [menuItemReorder, menuItemDealer, menuItemNew, menuItemClear] });
-      // var menuButton = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuGame });
-
       // Use popover, so it does not go to small screen on a mobile
       var menuButtonReorder = new sap.m.Button({ type: "Transparent", icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
       var menuButtonDealer = new sap.m.Button({ type: "Transparent", icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.pageGameController.onDealerChange(oApp); } });
       var menuButtonNew = new sap.m.Button({ type: "Transparent", icon: "sap-icon://media-play", text: "New Game", press: function () { fiveCrowns.pageGameController.onNewGame(); } });
       var menuButtonClear = new sap.m.Button({ type: "Transparent", icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
-      // debugger; // Remove refresh option later after testing  
-      // var menuButtonRefresh = new sap.m.Button({ type: "Transparent", icon: "sap-icon://refresh", text: "Refresh", press: function () { fiveCrowns.pageGameController.onGameRefresh(); } });
       var vboxMenu = new sap.m.VBox({ items: [menuButtonReorder, menuButtonDealer, menuButtonNew, menuButtonClear] });
       var popoverMenu = new sap.m.Popover({ title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
       var menuButton = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverMenu.openBy(menuButton); } });
@@ -72,15 +58,15 @@ fiveCrowns.pageGameView = (function () {
       page.setCustomHeader(barGameHeader);
 
 
+
+
       // Table layout
       tabRounds = new sap.m.Table({ id: "idGameTable", sticky: ["ColumnHeaders", "HeaderToolbar", "InfoToolbar"] });
       var oModel = new sap.ui.model.json.JSONModel(fiveCrowns.model.getModel());
       tabRounds.setModel(oModel);
-      // Add columns
-      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Round" }) }));
-      tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: " " }) }));
-      // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "50px" }) }));
 
+      // Add columns
+      tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: " " }) }));  // Column for "Rounds"
       players = fiveCrowns.model.getModel().players;      // Add players as columns
       for (let playerNum = 0; playerNum < fiveCrowns.model.getMaxPlayers(); playerNum++) {
         playerName = players[playerNum].playerName;
@@ -96,57 +82,34 @@ fiveCrowns.pageGameView = (function () {
             })
           }
         ));
-        // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Input({ id: playerHeaderId, value: playerName }).addStyleClass("playerNameHeader") }));
-        // tabRounds.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: playerName }) }));
       }
-
-
-      // Sample XML for player name suggestions
-      //   <Input
-      // 	id="productInput"
-      // 	placeholder="Enter product"
-      // 	showSuggestion="true"
-      // 	showValueHelp="false"
-      // 	suggestionItems="{/ProductCollection}">
-      // 	<suggestionItems>
-      // 		<core:Item text="{Name}" />
-      // 	</suggestionItems>
-      // </Input>
-
 
       // Add cells
       colListItem = new sap.m.ColumnListItem({});
       colListItem.addCell(new sap.m.Text({ id: "roundId", text: "{round}", wrapping: false }));
-      // colListItem.addCell(new sap.m.Input({ value: "{s0}", type: "Number", styleClass: "sapUiSizeCompact", change: function(){fiveCrowns.pageGameController.onScoreChange()} }));   
-      // colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", textAlign: sap.ui.core.TextAlign.Center, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-0", value: "{s0}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-1", value: "{s1}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-2", value: "{s2}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-3", value: "{s3}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-4", value: "{s4}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-5", value: "{s5}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-6", value: "{s6}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
-      colListItem.addCell(new sap.m.Input({ id: "s-7", value: "{s7}", type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      let maxPlayers = fiveCrowns.model.getMaxPlayers();
+      for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+        let columnId = "s-" + playerNum;
+        let columnValue = "{s" + playerNum + "}";
+        colListItem.addCell(new sap.m.Input({ id: columnId, value: columnValue, type: "Number", change: function () { fiveCrowns.pageGameController.onScoreChange(this) } }));
+      };
 
-      // debugger;  // Set underline only
-      // colListItem.addStyleClass("sapUiSmallMarginBottom");
-      colListItem.getCells()[3].addStyleClass("sapUiSmallMarginBottom");
-      colListItem.getCells()[4].addStyleClass("sapUiSmallMarginBottom");
-
+      // Bind table and add to page
       tabRounds.bindAggregation("items", "/rounds", colListItem);
       page.addContent(tabRounds);
 
+
+
+      
       // Page Add footer
       barTotal = new sap.m.Toolbar({ id: "idBarTotal" });
       barTotal.addContent(new sap.m.Input({ value: "Total", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total0", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total1", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total2", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total3", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total4", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total5", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total6", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
-      barTotal.addContent(new sap.m.Input({ id: "total7", textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
+        let totalId = "total" + playerNum;
+        barTotal.addContent(new sap.m.Input({ id: totalId, textAlign: sap.ui.core.TextAlign.Center, type: "Number", editable: false }));
+      };
+
+
       page.setFooter(barTotal);
       // page.setFloatingFooter(true);
 
@@ -157,6 +120,7 @@ fiveCrowns.pageGameView = (function () {
 
 
       // Detect long press on the header. Use to change dealer
+      // This doesn't work as the phone selects text on a long press. Left here in the design changes, and it is needed
       var pressTimer;
       // Attach the touchstart event to detect the long press
       tabRounds.attachBrowserEvent("touchstart", function (oEvent) {

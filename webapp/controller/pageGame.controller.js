@@ -29,9 +29,10 @@ fiveCrowns.pageGameController = (function () {
     function refreshScreenTotals(playerCount) {
         var oGame = fiveCrowns.model.getModel();
         for (let playerNum = 0; playerNum < playerCount; playerNum++) {
-            elementId = "total" + playerNum + "-inner";
-            if (document.getElementById(elementId)) {
-                document.getElementById(elementId).value = oGame.totals[playerNum];
+            elementId = "total" + playerNum;
+            totalElement = sap.ui.getCore().byId(elementId)
+            if (totalElement) {
+                totalElement.setValue(oGame.totals[playerNum]);
             }
         }
     };
@@ -132,28 +133,12 @@ fiveCrowns.pageGameController = (function () {
         }
         row = oGame.getCurrentRound();
         if (row >= 11) { return };   // Game finished
-        switch (fiveCrowns.settings.oSettings.highlightCurrentRound) {
-            case '0': break;   // Do not highlight round
-            case '1':
-                column = oGame.currentDealer + 1;       // Offset to step over "Round" column
-                columnLand = oGame.currentRound + 1;    // Offset to step over "Player" column (Landscape)
-                tabRounds.getItems()[row].getCells()[column].setValueState("Information");
-                tabRounds.getItems()[row].getCells()[column].setValueStateText("Dealer");
-                tabPlayers.getItems()[oGame.currentDealer].getCells()[columnLand].setValueState("Information");
-                tabPlayers.getItems()[oGame.currentDealer].getCells()[columnLand].setValueStateText("Dealer"); // Set for Landscape mode
-                break;
-            case '2':
-                for (let playerNum = 0; playerNum < oGame.playerCount; playerNum++) {
-                    column = playerNum + 1;                 // Offset to step over "Round" column
-                    columnLand = oGame.currentRound + 1;    // Offset to step over "Player" column (Landscape)
-                    tabRounds.getItems()[row].getCells()[column].setValueState("Warning");
-                    tabRounds.getItems()[row].getCells()[column].setValueStateText("Dealer");
-                    tabPlayers.getItems()[playerNum].getCells()[columnLand].setValueState("Warning");
-                    tabPlayers.getItems()[playerNum].getCells()[columnLand].setValueStateText("Dealer");
-                }
-                break;
-            default: break;
-        }
+        column = oGame.currentDealer + 1;       // Offset to step over "Round" column
+        columnLand = oGame.currentRound + 1;    // Offset to step over "Player" column (Landscape)
+        tabRounds.getItems()[row].getCells()[column].setValueState("Information");
+        tabRounds.getItems()[row].getCells()[column].setValueStateText("Dealer");
+        tabPlayers.getItems()[oGame.currentDealer].getCells()[columnLand].setValueState("Information");
+        tabPlayers.getItems()[oGame.currentDealer].getCells()[columnLand].setValueStateText("Dealer"); // Set for Landscape mode
     };
 
 
@@ -170,8 +155,7 @@ fiveCrowns.pageGameController = (function () {
         onPlayerChange: function (element) {
             var playerName = element.getValue();
             var elementId = element.getId();
-            if ((sap.ui.Device.system.desktop && fiveCrowns.settings.oSettings.orientation == 'P') ||
-                (!sap.ui.Device.system.desktop && sap.ui.Device.orientation.portrait)) {
+            if (sap.ui.Device.orientation.portrait) {
                 var playerNum = elementId.split('-')[1];
             } else {
                 var playerNum = elementId.split('-')[2];
@@ -184,8 +168,7 @@ fiveCrowns.pageGameController = (function () {
         onScoreChange: function (element) {
             var score = element.getValue();
             var elementId = element.getId();
-            if ((sap.ui.Device.system.desktop && fiveCrowns.settings.oSettings.orientation == 'P') ||
-                (!sap.ui.Device.system.desktop && sap.ui.Device.orientation.portrait)) {
+            if (sap.ui.Device.orientation.portrait) {
                 var round = Number(elementId.split('-')[3]);
                 var player = Number(elementId.split('-')[1]);
             } else {
@@ -211,12 +194,12 @@ fiveCrowns.pageGameController = (function () {
 
         onReorderPlayers: function (oApp) {
             setReorderTable();
-            oApp.to("pageReorder");
+            oApp.to("pageReorder", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
         onDealerChange: function (oApp) {
             setChangeDealerTable();
-            oApp.to("pageChangeDealer");
+            oApp.to("pageChangeDealer", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
         onClearScores: function () {
@@ -245,16 +228,8 @@ fiveCrowns.pageGameController = (function () {
         },
 
         onBack: function (oApp) {
-            // debugger;  // Get an error going back to main page "Blocked aria-hidden on an element because its descendant retained focus."
-            // I'm not sure how to fix this error. The app works regardless
+            sap.ui.getCore().byId("popoverMain").close()
             oApp.back();
-            // sap.ui.getCore().applyChanges();
-            // document.getElementById("__item7-menuinnerlist-content").blur();
-            // oApp.to("pageMain");
-            // sap.ui.getCore().applyChanges();
-            // document.activeElement.blur();
-            // document.getElementById("playerCount-inner").focus();
-
             // Save game
             oGame = fiveCrowns.model.getModel();
             fiveCrowns.games.modifyGame(oGame);

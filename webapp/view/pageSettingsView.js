@@ -35,16 +35,12 @@ fiveCrowns.pageSettingsView = (function () {
       var oModel = new sap.ui.model.json.JSONModel(fiveCrowns.settings.oSettings);
       frmSettings.setModel(oModel);
 
-      frmSettings.addContent(new sap.m.Label({ text: "Default number of players" }));
-      frmSettings.addContent(new sap.m.Input({ value: "{/defaultPlayerCount}" }));
-      frmSettings.addContent(new sap.m.Label({ text: "Default player prefix" }));
-      frmSettings.addContent(new sap.m.Input({ value: "{/playerPrefix}" }));
-      frmSettings.addContent(new sap.m.Label({ text: "Highlight current round" }));
-      frmSettings.addContent(new sap.m.Input({ value: "{/highlightCurrentRound}", type: "Number" }));
+      // frmSettings.addContent(new sap.m.Label({ text: "Default number of players" }));
+      // frmSettings.addContent(new sap.m.Input({ value: "{/defaultPlayerCount}" }));
+      // frmSettings.addContent(new sap.m.Label({ text: "Default player prefix" }));
+      // frmSettings.addContent(new sap.m.Input({ value: "{/playerPrefix}" }));
       frmSettings.addContent(new sap.m.Label({ text: "Screen timeout (seconds)" }));
       frmSettings.addContent(new sap.m.Input({ value: "{/screenTimeout}", type: "Number" }));
-      frmSettings.addContent(new sap.m.Label({ text: "Orientation (P for portrait)" }));
-      frmSettings.addContent(new sap.m.Input({ value: "{/orientation}" }));
 
       page.addContent(frmSettings);
 

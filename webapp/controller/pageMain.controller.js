@@ -14,11 +14,10 @@ fiveCrowns.pageMainController = (function () {
         fiveCrowns.pageGameController.refreshPlayerNames(players);
         fiveCrowns.pageGameController.highlightDealer(fiveCrowns.model.getModel());
         fiveCrowns.pageGameController.highlightRound(fiveCrowns.model.getModel());
-        if ((sap.ui.Device.system.desktop && fiveCrowns.settings.oSettings.orientation == 'P') ||
-            (!sap.ui.Device.system.desktop && sap.ui.Device.orientation.portrait)) {
-            oApp.to("pageGame");
+        if (sap.ui.Device.orientation.portrait) {
+            oApp.to("pageGame", fiveCrowns.settings.oSettings.getPageTransition());
         } else {
-            oApp.to("pageGameLandscape");
+            oApp.to("pageGameLandscape", fiveCrowns.settings.oSettings.getPageTransition());
         };
     };
 
@@ -27,7 +26,7 @@ fiveCrowns.pageMainController = (function () {
     function gotoList(oApp) {
         requestFullScreen();
         tabGames.getModel().refresh();
-        oApp.to("pageGames");
+        oApp.to("pageGames", fiveCrowns.settings.oSettings.getPageTransition());
     };
 
 
@@ -57,7 +56,8 @@ fiveCrowns.pageMainController = (function () {
 
         onSettings: function (oApp) {
             requestFullScreen();
-            oApp.to("pageSettings");
+            sap.ui.getCore().byId("popoverMain").close()
+            oApp.to("pageSettings", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
         onAbout: function (oApp) {
@@ -65,20 +65,20 @@ fiveCrowns.pageMainController = (function () {
             sap.ui.getCore().byId("popoverMain").close()
             sap.m.MessageToast.show("Five Crowns v0.01 (Beta)");
             // Popover? or page?
-            // oApp.to("pageAbout");
+            // oApp.to("pageAbout", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
         onHelp: function (oApp) {
             requestFullScreen();
             sap.ui.getCore().byId("popoverMain").close()
             sap.m.MessageToast.show("Help is not yet available");
-            // oApp.to("pageHelp");
+            // oApp.to("pageHelp", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
         onInstr: function (oApp) {
             requestFullScreen();
-            // sap.ui.getCore().byId("popoverMain").close()
-            oApp.to("pageInstr");
+            sap.ui.getCore().byId("popoverMain").close()
+            oApp.to("pageInstr", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
 
