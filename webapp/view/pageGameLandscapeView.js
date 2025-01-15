@@ -61,7 +61,7 @@ fiveCrowns.pageGameLandscapeView = (function () {
           roundName = rounds[roundNum].round;
         }
         roundHeaderId = 'roundName-' + roundNum;
-        tabPlayers.addColumn(new sap.m.Column({ header: new sap.m.Text({ id: roundHeaderId, text: roundName, wrapping: false }) } ));
+        tabPlayers.addColumn(new sap.m.Column({ header: new sap.m.Text({ id: roundHeaderId, text: roundName, wrapping: false }) }));
       }
       tabPlayers.addColumn(new sap.m.Column({ header: new sap.m.Text({ id: "idLTotal", text: "Total" }) }));
 
@@ -90,8 +90,8 @@ fiveCrowns.pageGameLandscapeView = (function () {
       // Add page to app
       oApp.addPage(page);
 
-      
-            // Detect long press in table
+
+      // Detect long press in table
       tabPlayers.addEventDelegate({
         onAfterRendering: function () {
           tabPlayers.$().on("touchstart", "tr", function (oEvent) {
@@ -107,10 +107,10 @@ fiveCrowns.pageGameLandscapeView = (function () {
                 var cell = eventTarget.closest("td, th"); // Find the nearest cell
                 var columnIndex = Array.from(cell.parentElement.children).indexOf(cell)
                 if (columnIndex == 1) {   // Only long press on column 1, Player Name
-                var playerNum = oData.playerPosition - 1;
-                fiveCrowns.pageChangeDealerController.setDealer(playerNum);
+                  var playerNum = oData.playerPosition - 1;
+                  fiveCrowns.pageChangeDealerController.setDealer(playerNum);
+                }
               }
-            }
             }, 1500); // milliseconds for long press
             // Cancel the timer on touchend or touchmove
             $target.on("touchend touchmove", function () {
@@ -161,15 +161,48 @@ fiveCrowns.pageGameLandscapeView = (function () {
 
 
       // debugger;
-      // tabPlayers.getItems().forEach(function (oItem, rowIndex) {
-      //   oItem.getCells().forEach(function (oCell, cellIndex) {
-      //     if (oCell.isA("sap.m.Input")) { // Check if the cell contains an input field
-      //       // oCell.setTabIndex(cellIndex + rowIndex * oTable.getItems().length); // Set custom tabindex
-      //       oCell.setTabIndex(rowIndex + cellIndex * 8); // Set custom tabindex
-      //     }
-      //   });
-      // });
+      // Nearly working.
+      //   - Only gets done once
+      //   - Can only set if the cell is on the screen. This is dependent on playerCount
+      //   = If the number of players increases, the new players are not tabbed
+      //   - Works if the player count decreases
+      //   - Didn't work starting from first row/column. Maybe tabIndex can't be 0?
+      //   - Should include names colum as well
+      //   - Can I set it everytime when going to the screen. This could be an issue for orientation change.
 
+      tabPlayers.addEventDelegate({
+        onAfterRendering: function () {
+          // let maxPlayers = fiveCrowns.model.getMaxPlayers();
+          let maxPlayers = playerCount.getValue();
+          tabPlayers.getItems().forEach(function (oItem, rowIndex) {
+            oItem.getCells().forEach(function (oCell, cellIndex) {
+              if (oCell.isA("sap.m.Input")) { // Check if the cell contains an input field
+                // oCell.setTabIndex(cellIndex + rowIndex * oTable.getItems().length); // Set custom tabindex
+                // debugger;
+                let iTabIndex = rowIndex + (cellIndex * maxPlayers);
+                var tabIndex = "" + iTabIndex;
+                // oCell.setTabIndex(tabIndex); // Set custom tabindex
+
+                var elementId = "r-" + cellIndex + "-idGameLTable-" + rowIndex + "-inner";
+                // r-0-idGameLTable-0-inner
+                if (rowIndex < maxPlayers) {
+                  if (cellIndex < 11) {
+                    elementRef = document.getElementById(elementId);
+                    elementRef.tabIndex = tabIndex;
+                  }
+                }
+                // oCell.addCustomData(new sap.ui.core.CustomData({
+                //   key: "tabIndex",
+                //   value: tabIndex,
+                //   writeToDom: true
+                // }));
+
+
+              }
+            });
+          });
+        }
+      });
 
       // // Not sure what the code below does. So I have commented out. (It looks like it trying to set tab stops)
       // // this._oTable.addEventDelegate({
@@ -205,62 +238,67 @@ fiveCrowns.pageGameLandscapeView = (function () {
 
 
 
-      // debugger;
-      tabPlayers.addEventDelegate({
-        onAfterRendering: function () {
-          // debugger;
-          var oDomRef = tabPlayers.getDomRef();
-          if (oDomRef) {
-            oDomRef.setAttribute("tabindex", "0"); // Set tabindex for the table
+      // // Try intercepting tab key. Doesn't work. Probably because it's not a tab on a mobile.
+      // // debugger;
+      // tabPlayers.addEventDelegate({
+      //   onAfterRendering: function () {
+      //     // debugger;
+      //     var oDomRef = tabPlayers.getDomRef();
+      //     if (oDomRef) {
+      //       oDomRef.setAttribute("tabindex", "0"); // Set tabindex for the table
 
-            // Add a keyboard event listener for custom navigation
-            oDomRef.addEventListener("keydown", function (event) {
-              if (event.key === "Tab") {
-                event.preventDefault(); // Prevent default tabbing
-                handleCustomTabbing(event, tabPlayers);
-              }
-            });
-          }
-        }
-      });
+      //       // Add a keyboard event listener for custom navigation
+      //       oDomRef.addEventListener("keydown", function (event) {
+      //         if (event.key === "Tab") {
+      //           event.preventDefault(); // Prevent default tabbing
+      //           handleCustomTabbing(event, tabPlayers);
+      //         }
+      //       });
+      //     }
+      //   }
+      // });
 
-      // Function to handle tabbing through columns
-      function handleCustomTabbing(event, table) {
-        // debugger;
-        var focusedElement = document.activeElement;
-        var rows = table.getDomRef().querySelectorAll(".sapMLIB"); // Rows in the table
-        var columnIndex = -1;
+      // // Function to handle tabbing through columns
+      // function handleCustomTabbing(event, table) {
+      //   // debugger;
+      //   var focusedElement = document.activeElement;
+      //   var rows = table.getDomRef().querySelectorAll(".sapMLIB"); // Rows in the table
+      //   var columnIndex = -1;
 
-        // Find the currently focused cell's column index
-        rows.forEach(function (row, rowIndex) {
-          // debugger;
-          var cells = row.querySelectorAll(".sapMText, .sapMInput"); // Adapt this to your cell type
-          cells.forEach(function (cell, cellIndex) {
-            if (cell === focusedElement) {
-              columnIndex = cellIndex; // Found the focused column
-            }
-          });
-        });
+      //   // Find the currently focused cell's column index
+      //   rows.forEach(function (row, rowIndex) {
+      //     // debugger;
+      //     var cells = row.querySelectorAll(".sapMText, .sapMInput"); // Adapt this to your cell type
+      //     cells.forEach(function (cell, cellIndex) {
+      //       if (cell === focusedElement) {
+      //         columnIndex = cellIndex; // Found the focused column
+      //       }
+      //     });
+      //   });
 
-        // Pretend we found a column
-        columnIndex = 4;
-        // debugger;
-        if (columnIndex >= 0) {
-          var nextFocusRow = event.shiftKey ? -1 : 1; // Shift+Tab goes up
-          var currentRowIndex = Array.from(rows).findIndex(row =>
-            Array.from(row.querySelectorAll(".sapMText, .sapMInput")).includes(focusedElement)
-          );
+      //   // Pretend we found a column
+      //   columnIndex = 4;
+      //   // debugger;
+      //   if (columnIndex >= 0) {
+      //     var nextFocusRow = event.shiftKey ? -1 : 1; // Shift+Tab goes up
+      //     var currentRowIndex = Array.from(rows).findIndex(row =>
+      //       Array.from(row.querySelectorAll(".sapMText, .sapMInput")).includes(focusedElement)
+      //     );
 
-          var nextRowIndex = currentRowIndex + nextFocusRow;
-          if (nextRowIndex >= 0 && nextRowIndex < rows.length) {
-            // Move to the same column in the next row
-            var nextRowCells = rows[nextRowIndex].querySelectorAll(".sapMText, .sapMInput");
-            if (nextRowCells[columnIndex]) {
-              nextRowCells[columnIndex].focus();
-            }
-          }
-        }
-      }
+      //     var nextRowIndex = currentRowIndex + nextFocusRow;
+      //     if (nextRowIndex >= 0 && nextRowIndex < rows.length) {
+      //       // Move to the same column in the next row
+      //       var nextRowCells = rows[nextRowIndex].querySelectorAll(".sapMText, .sapMInput");
+      //       if (nextRowCells[columnIndex]) {
+      //         nextRowCells[columnIndex].focus();
+      //       }
+      //     }
+      //   }
+      // }
+
+
+
+
 
 
       // Load custom CSS

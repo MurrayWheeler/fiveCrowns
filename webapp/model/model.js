@@ -236,7 +236,6 @@ fiveCrowns.model = (function () {
          * Initialise model
          */
         init: function () {
-            // requestFullScreen();
             fiveCrowns.settings.initSettings();
             fiveCrowns.games.initGames();
             createApp();

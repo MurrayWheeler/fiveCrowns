@@ -14,8 +14,20 @@ async function requestFullScreen() {
         // https://wiki.appstudio.dev/How_to_run_fullscreen_in_an_Android_Chrome_app
         document.documentElement.webkitRequestFullScreen();
         console.log('Full screen mode');
+        resetTimeout();
     } catch (err) {
         console.error('Failed to go full screen:', err);
+    }
+}
+
+
+// Function to exit full screen mode
+async function exitFullScreen() {
+    try {
+        document.webkitExitFullscreen();
+        console.log('Exited full screen mode');
+    } catch (err) {
+        console.error('Failed to exit full screen:', err);
     }
 }
 

@@ -81,6 +81,23 @@ fiveCrowns.pageMainController = (function () {
             oApp.to("pageInstr", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
+        onBack: function (oApp) {
+            exitFullScreen();
+
+            // If I manage to get the close app to work, I may want to add a confirm dialog
+            
+            // For Hybrid Apps (e.g., with Cordova, Capacitor)
+            // If your app is packaged as a native or hybrid mobile app using frameworks like Apache Cordova, Capacitor, or similar, you can use plugins to programmatically close the app.
+
+            // Using Cordova
+            // Install the cordova-plugin-exit plugin:
+            // cordova plugin add cordova-plugin-exit
+
+            // Then, use it in your JavaScript code:
+            // navigator.app.exitApp();
+
+        },
+
 
     };
 

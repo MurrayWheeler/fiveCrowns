@@ -23,12 +23,14 @@ fiveCrowns.pageMainView = (function () {
       // var menuMain = new sap.m.Menu({ items: [menuItemNew, menuItemResume, menuItemList, menuItemSettings] });
       // var menuButtonMain = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuMain });
 
+      
       // Add Header bar
       var barMainHeader = new sap.m.Toolbar({ id: "idBarMainHeader" });
       barMainHeader.addContent(new sap.m.Image({ src: "resources/crown.png", width: "80px", height: "45px" }));
       barMainHeader.addContent(new sap.m.Text({ text: "Five Crowns" }));
       barMainHeader.addContent(new sap.m.ToolbarSpacer());
       // barMainHeader.addContent(menuButtonMain);
+      barMainHeader.addContent(new sap.m.Button({ icon: "sap-icon://nav-back", press: function () { fiveCrowns.pageMainController.onBack(oApp); } }));
       page.setCustomHeader(barMainHeader);
 
 
