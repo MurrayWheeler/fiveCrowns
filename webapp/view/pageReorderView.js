@@ -32,48 +32,29 @@ fiveCrowns.pageReorderView = (function () {
 
 
       // Table layout
-      tabReorder = new sap.m.Table({ id: "idPlayerReorder", sticky: ["ColumnHeaders", "HeaderToolbar", "InfoToolbar"] });
+      tabReorder = new sap.m.Table({ id: "idPlayerReorder", sticky: ["ColumnHeaders", "HeaderToolbar", "InfoToolbar"], mode: "SingleSelectMaster" });
       var oModel = new sap.ui.model.json.JSONModel(fiveCrowns.model.getReorderModel());
       tabReorder.setModel(oModel);
 
       // Add columns
-      tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Position" }) }));
+      tabReorder.addColumn(new sap.m.Column({ id: "playerUp", header: new sap.m.Text({ text: "" }) }));
+      tabReorder.addColumn(new sap.m.Column({ id: "playerDown", header: new sap.m.Text({ text: "" }) }));
+      // tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Position" }) }));
       tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Player" }) }));
-      tabReorder.getColumns()[0].setWidth("25%");
+      columns = tabReorder.getColumns();
+      for (let index = 0; index < columns.length; index++) {
+        column = columns[index];
+        if (column.getId() == "playerUp" || column.getId() == "playerDown") {
+          tabReorder.getColumns()[index].setWidth("60px");
+        }
+      }
 
       // Add cells
       colItemPlayer = new sap.m.ColumnListItem({});
-      colItemPlayer.addCell(new sap.m.Input({ id: "idPlayerPosition", value: "{playerPosition}", change: function () { fiveCrowns.pageReorderController.onReorderChange(this) } }));
+      colItemPlayer.addCell(new sap.m.Button({ icon: "sap-icon://navigation-up-arrow", press: function () { fiveCrowns.pageReorderController.onPlayerUp(this); } }));
+      colItemPlayer.addCell(new sap.m.Button({ icon: "sap-icon://navigation-down-arrow", press: function () { fiveCrowns.pageReorderController.onPlayerDown(this); } }));
+      // colItemPlayer.addCell(new sap.m.Input({ id: "idPlayerPosition", value: "{playerPosition}", change: function () { fiveCrowns.pageReorderController.onReorderChange(this) } }));
       colItemPlayer.addCell(new sap.m.Text({ text: "{playerName}" }));
-
-
-      // debugger;
-      // // var dndconfig = new sap.ui.core.dnd.DragDropBase({
-      //   var dndconfig = {
-      //     groupName: "available2selected",
-      //   targetAggregation: "items",
-      //   dropPosition: "Between", drop: "onDropSelectedProductsTable"
-      // };
-      // tabReorder.addDragDropConfig(dndconfig);
-      // {
-      //   groupName: "available2selected", targetAggregation: "items",
-      //   dropPosition: "Between", drop: "onDropSelectedProductsTable"
-      // },
-      // {
-      //   sourceAggregation: "items", targetAggregation: "items",
-      //   dropPosition: "Between", drop: "onDropSelectedProductsTable"
-
-      // tabReorder.addDragDropConfig([{ groupName: "selected2available", sourceAggregation: "items" },
-      // {
-      //   groupName: "available2selected", targetAggregation: "items",
-      //   dropPosition: "Between", drop: "onDropSelectedProductsTable"
-      // },
-      // {
-      //   sourceAggregation: "items", targetAggregation: "items",
-      //   dropPosition: "Between", drop: "onDropSelectedProductsTable"
-      // }]);
-
-
 
 
       tabReorder.bindAggregation("items", "/players", colItemPlayer);
@@ -83,7 +64,31 @@ fiveCrowns.pageReorderView = (function () {
       // Add page to app
       oApp.addPage(page);
 
-      // Load custom CSS
+
+
+     // Add drag and drop
+     // This is missing animation of the field moving
+      tabReorder.attachBrowserEvent("touchstart", function (oEvent) {
+        const row = $(oEvent.target).closest("tr").get(0);
+        if (row) {
+          draggedElement = row;
+          // console.log("Dragging started on row:", row);
+        }
+      });
+      tabReorder.attachBrowserEvent("touchend", function (oEvent) {
+        const touch = oEvent.changedTouches[0];
+        const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+        const targetRow = $(dropTarget).closest("tr").get(0);
+        if (targetRow && draggedElement) {
+          // console.log(`Dragged row from ${draggedElement.id} to ${targetRow.id}`);
+          fiveCrowns.pageReorderController.onDragAndDrop(draggedElement.id.split('-')[2], targetRow.id.split('-')[2])
+        }
+        draggedElement = null;  // Reset dragged element
+      });
+
+
+
+     // Load custom CSS
       jQuery.sap.includeStyleSheet("css/style.css");
       page.addStyleClass("myCustomBackground");
 

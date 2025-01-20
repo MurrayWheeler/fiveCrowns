@@ -132,13 +132,9 @@ fiveCrowns.pageGamesController = (function () {
 
 
         onNamePress: function (oGameName) {
-            // Get the selected row's binding context
             var oContext = oGameName.getBindingContext();
-            // Get data from the binding context
             var oGame = oContext.getObject();
-            // Set the game to be display only
             fiveCrowns.pageGameController.setGameEditable(false);
-            // Load the game data and use resume to go back into the game
             fiveCrowns.model.setModelValues(oGame);
             fiveCrowns.pageMainController.gotoGame(oApp);
         },

@@ -22,10 +22,10 @@ fiveCrowns.pageMainController = (function () {
     };
 
 
-
     function gotoList(oApp) {
         requestFullScreen();
-        tabGames.getModel().refresh();
+        tabGames.getModel().setData(fiveCrowns.games.getModel());
+        // tabGames.getModel().refresh();
         oApp.to("pageGames", fiveCrowns.settings.oSettings.getPageTransition());
     };
 
@@ -85,7 +85,7 @@ fiveCrowns.pageMainController = (function () {
             exitFullScreen();
 
             // If I manage to get the close app to work, I may want to add a confirm dialog
-            
+
             // For Hybrid Apps (e.g., with Cordova, Capacitor)
             // If your app is packaged as a native or hybrid mobile app using frameworks like Apache Cordova, Capacitor, or similar, you can use plugins to programmatically close the app.
 

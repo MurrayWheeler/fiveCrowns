@@ -1,6 +1,14 @@
 /* Enter your custom styles here */
 
+/* Test dragging */
+.dragging {
+    position: absolute; /* Ensures the element can be moved freely */
+    pointer-events: none; /* Prevents accidental interactions */
+    z-index: 1000; /* Ensures the element is above other content */
+    opacity: 0.8; /* Makes the element semi-transparent for better UX */
+  }
 
+  
 
 .myCustomBackground {
     /*    background-color: rebeccapurple !important; /* !important ensures it overrides default styles */
@@ -15,6 +23,11 @@
 .myTableBackground .sapMListTblHeader {
     /* This does not seem to be working.???? */
     background-color: #740190 !important;
+}
+
+.myTableRowHeight .sapMLIB {
+    height: 20px !important; /* Force smaller row height */
+    line-height: 20px !important; /* Adjust line height for text alignment */
 }
 
 .myTableFontColor {

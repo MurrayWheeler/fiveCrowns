@@ -7,7 +7,7 @@ fiveCrowns.model = (function () {
     const maxPlayers = 7;
     const maxRounds = 11;
     const playerPrefix = "P";
-    const playersLocalStorage = "fiveCrowns.playesData";
+    const gameLocalStorage = "fiveCrowns.gameData";
 
     // var oPlayer = new Object;
     // var aPlayers = new Array;
@@ -198,30 +198,21 @@ fiveCrowns.model = (function () {
 
 
     function loadSavedData() {
-        oGame = fiveCrowns.model.getModel();
-        loadPlayers(oGame);
+        loadGame();
     };
 
-    function savePlayers(oGame) {
+    function saveGame(oGame) {
         // Storing data:
-        var oPlayerInfo = {};
-        oPlayerInfo.players = oGame.players;
-        oPlayerInfo.playerCount = oGame.playerCount;
-        var playersJson = JSON.stringify(oPlayerInfo);
-        localStorage.setItem(playersLocalStorage, playersJson);
+        var gameJson = JSON.stringify(oGame);
+        localStorage.setItem(gameLocalStorage, gameJson);
     };
 
-    function loadPlayers(oGame) {
+    function loadGame() {
         // Retrieving data:
-        let playersJson = localStorage.getItem(playersLocalStorage);
-        if (!playersJson) return;
-        let oPlayerInfo = JSON.parse(playersJson);
-        if (!oPlayerInfo.playerCount) return;
-        oGame.playerCount = oPlayerInfo.playerCount;
-        for (let playerNum = 0; playerNum < oPlayerInfo.players.length; playerNum++) {
-            if (playerNum >= oGame.players.length) { break }
-            oGame.players[playerNum].playerName = oPlayerInfo.players[playerNum].playerName;
-        }
+        let gameJson = localStorage.getItem(gameLocalStorage);
+        if (!gameJson) return;
+        let oGameValues = JSON.parse(gameJson);
+        fiveCrowns.model.setModelValues(oGameValues);
     };
 
 
@@ -229,8 +220,7 @@ fiveCrowns.model = (function () {
 
     return {
 
-        savePlayers: savePlayers,
-        loadPlayers: loadPlayers,
+        saveGame: saveGame,
 
         /**
          * Initialise model

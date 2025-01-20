@@ -11,30 +11,6 @@ fiveCrowns.pageGameView = (function () {
      */
     layout: function (oApp) {
 
-
-      // Create page
-      // debugger;
-      // pageMmm = document.getElementById("pageGame");
-      // var page = new sap.m.Page("pageGame", { title: "Game page" });
-
-      // if ( oApp.getPage("pageGame") ) {
-      //   return;
-      // }
-
-      //  Create skeleton earlier. Then hide columns when displaying page
-      // page = oApp.getPage("pageGame");
-      // page.getContent()[0].getItems()[1].getColumns()[1].setVisible(false)
-      // probably need to save the table globally so I can retrieve it.
-
-
-
-
-
-      // page = oApp.getPage("pageGame");
-      // if (page === null) {
-      //   var page = new sap.m.Page("pageGame", { title: "Game page" });
-      // };
-
       var page = new sap.m.Page("pageGame", { title: "Game page" });
 
 
@@ -42,8 +18,9 @@ fiveCrowns.pageGameView = (function () {
       var menuButtonReorder = new sap.m.Button({ type: "Transparent", icon: "sap-icon://citizen-connect", text: "Reorder players", press: function () { fiveCrowns.pageGameController.onReorderPlayers(oApp); } });
       var menuButtonDealer = new sap.m.Button({ type: "Transparent", icon: "sap-icon://people-connected", text: "Change dealer", press: function () { fiveCrowns.pageGameController.onDealerChange(oApp); } });
       var menuButtonNew = new sap.m.Button({ type: "Transparent", icon: "sap-icon://media-play", text: "New Game", press: function () { fiveCrowns.pageGameController.onNewGame(); } });
+      var menuResume = new sap.m.Button({ type: "Transparent", icon: "sap-icon://media-play", text: "Resume game", press: function () { fiveCrowns.pageGameController.onResume(); } });
       var menuButtonClear = new sap.m.Button({ type: "Transparent", icon: "sap-icon://clear-all", text: "Clear scores", press: function () { fiveCrowns.pageGameController.onClearScores(); } });
-      var vboxMenu = new sap.m.VBox({ items: [menuButtonReorder, menuButtonDealer, menuButtonNew] });
+      var vboxMenu = new sap.m.VBox({ items: [menuButtonReorder, menuButtonDealer, menuButtonNew, menuResume] });
       var popoverGame = new sap.m.Popover({ id:"popoverGame", title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
       var menuButton = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverGame.openBy(menuButton); } });
 

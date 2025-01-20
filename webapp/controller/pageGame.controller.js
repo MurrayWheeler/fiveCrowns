@@ -142,6 +142,27 @@ fiveCrowns.pageGameController = (function () {
     };
 
 
+    function tabStopSet() {
+        if (sap.ui.Device.orientation.portrait) return;   // Only for landscape
+        let playerCount = fiveCrowns.model.getModel().playerCount;
+        tabPlayers.getItems().forEach(function (oItem, rowIndex) {
+            oItem.getCells().forEach(function (oCell, cellIndex) {
+                if (oCell.isA("sap.m.Input")) { // Check if the cell contains an input field
+                    let iTabIndex = (rowIndex + 1) + (cellIndex * playerCount);
+                    var tabIndex = "" + iTabIndex;  // tabIndex as a string
+                    var elementId = oCell.getId() + "-inner";
+                    // We need to get the "-inner" to set the tabstop. Eg. r-0-idGameLTable-0-inner
+                    if (rowIndex < playerCount) {
+                        elementRef = document.getElementById(elementId);
+                        elementRef.tabIndex = tabIndex;
+                    }
+                }
+            });
+        });
+
+    };
+
+
 
     return {
 
@@ -151,6 +172,8 @@ fiveCrowns.pageGameController = (function () {
         highlightDealer: highlightDealer,
         highlightRound: highlightRound,
         setReorderTable: setReorderTable,
+        tabStopSet: tabStopSet,
+
 
         onPlayerChange: function (element) {
             var playerName = element.getValue();
@@ -221,7 +244,7 @@ fiveCrowns.pageGameController = (function () {
             oGame = fiveCrowns.model.getModel();
             fiveCrowns.games.modifyGame(oGame);
             fiveCrowns.games.saveGames();
-            fiveCrowns.model.savePlayers(oGame);
+            fiveCrowns.model.saveGame(oGame);
             fiveCrowns.model.clearScores();
             if (sap.ui.Device.orientation.portrait) {
                 sap.ui.getCore().byId("popoverGame").close()
@@ -239,7 +262,7 @@ fiveCrowns.pageGameController = (function () {
             oGame = fiveCrowns.model.getModel();
             fiveCrowns.games.modifyGame(oGame);
             fiveCrowns.games.saveGames();
-            fiveCrowns.model.savePlayers(oGame);
+            fiveCrowns.model.saveGame(oGame);
             fiveCrowns.model.newGame();
             fiveCrowns.model.clearScores();
             if (sap.ui.Device.orientation.portrait) {
@@ -254,6 +277,18 @@ fiveCrowns.pageGameController = (function () {
             }
         },
 
+        onResume: function () {
+            fiveCrowns.pageGameController.setGameEditable(true);
+            if (sap.ui.Device.orientation.portrait) {
+                sap.ui.getCore().byId("popoverGame").close()
+            } else {
+                sap.ui.getCore().byId("popoverGameL").close()
+                // Pause for a second, to give the fields time to become enabled
+                // There might be a better way to do this. I couldn't find an event for when the field actually became enabled on the screen
+                setTimeout(function () { tabStopSet(); }, 1000);
+            }
+        },
+
         onBack: function (oApp) {
             if (sap.ui.Device.orientation.landscape) {
                 sap.ui.getCore().byId("popoverGameL").close()
@@ -263,12 +298,23 @@ fiveCrowns.pageGameController = (function () {
             oGame = fiveCrowns.model.getModel();
             fiveCrowns.games.modifyGame(oGame);
             fiveCrowns.games.saveGames();
-            fiveCrowns.model.savePlayers(oGame);
+            fiveCrowns.model.saveGame(oGame);
         },
 
         setGameEditable: function (isEditable) {
             setTableEditable(tabRounds, isEditable);
             setTableEditable(tabPlayers, isEditable);
+            // Set popover menu item "Reorder players"
+            sap.ui.getCore().byId("popoverGame").getContent()[0].getItems()[0].setEnabled(isEditable);
+            sap.ui.getCore().byId("popoverGameL").getContent()[0].getItems()[0].setEnabled(isEditable);
+            // Set popover menu item "Change Dealer"
+            sap.ui.getCore().byId("popoverGame").getContent()[0].getItems()[1].setEnabled(isEditable);
+            sap.ui.getCore().byId("popoverGameL").getContent()[0].getItems()[1].setEnabled(isEditable);
+            // Toggle New game and Resume game
+            sap.ui.getCore().byId("popoverGame").getContent()[0].getItems()[2].setVisible(isEditable);
+            sap.ui.getCore().byId("popoverGameL").getContent()[0].getItems()[2].setVisible(isEditable);
+            sap.ui.getCore().byId("popoverGame").getContent()[0].getItems()[3].setVisible(!isEditable);
+            sap.ui.getCore().byId("popoverGameL").getContent()[0].getItems()[3].setVisible(!isEditable);
         },
 
 

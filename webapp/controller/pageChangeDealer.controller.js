@@ -23,7 +23,8 @@ fiveCrowns.pageChangeDealerController = (function () {
         onChangeDealerBack: function (oApp) {
             // oGame = fiveCrowns.model.getModel();
             oChangeDealer = fiveCrowns.model.getChangeDealerModel();
-            for (let playerNum = 0; playerNum < oGame.playerCount; playerNum++) {
+            let playerCount = fiveCrowns.model.getModel().playerCount;
+            for (let playerNum = 0; playerNum < playerCount; playerNum++) {
                 if (oChangeDealer.players[playerNum].selected) {
                     setDealer(playerNum);
                     break;
