@@ -37,7 +37,8 @@ fiveCrowns.pageReorderView = (function () {
       tabReorder.setModel(oModel);
 
       // Add columns
-      tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Drag and Drop or use buttons" }) }));
+      // tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Drag and Drop or use buttons" }) }));
+      tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Player" }) }));
       tabReorder.addColumn(new sap.m.Column({ id: "playerUp", header: new sap.m.Text({ text: "" }) }));
       tabReorder.addColumn(new sap.m.Column({ id: "playerDown", header: new sap.m.Text({ text: "" }) }));
       // tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Position" }) }));

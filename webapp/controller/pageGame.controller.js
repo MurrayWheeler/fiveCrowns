@@ -210,14 +210,6 @@ fiveCrowns.pageGameController = (function () {
             highlightRound(oGame);
         },
 
-        // Refresh for testing. Left here for a short while in case it is wanted again.
-        // onGameRefresh: function () {
-        //     // What causes screen to update?
-        //     // When changing from portrait to landscape, scores do not update
-        //     // tabReorder.getModel().refresh();
-        //     tabRounds.getModel().refresh();
-        //     tabPlayers.getModel().refresh();
-        // },
 
         onReorderPlayers: function (oApp) {
             if (sap.ui.Device.orientation.portrait) {
@@ -227,6 +219,7 @@ fiveCrowns.pageGameController = (function () {
             }
             setReorderTable();
             oApp.to("pageReorder", fiveCrowns.settings.oSettings.getPageTransition());
+            sap.m.MessageToast.show("Drag and Drop names or use buttons");
         },
 
         onDealerChange: function (oApp) {
