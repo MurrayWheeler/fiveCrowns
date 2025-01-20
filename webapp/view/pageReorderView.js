@@ -37,10 +37,10 @@ fiveCrowns.pageReorderView = (function () {
       tabReorder.setModel(oModel);
 
       // Add columns
+      tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Drag and Drop or use buttons" }) }));
       tabReorder.addColumn(new sap.m.Column({ id: "playerUp", header: new sap.m.Text({ text: "" }) }));
       tabReorder.addColumn(new sap.m.Column({ id: "playerDown", header: new sap.m.Text({ text: "" }) }));
       // tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Position" }) }));
-      tabReorder.addColumn(new sap.m.Column({ header: new sap.m.Text({ text: "Player" }) }));
       columns = tabReorder.getColumns();
       for (let index = 0; index < columns.length; index++) {
         column = columns[index];
@@ -51,10 +51,10 @@ fiveCrowns.pageReorderView = (function () {
 
       // Add cells
       colItemPlayer = new sap.m.ColumnListItem({});
+      colItemPlayer.addCell(new sap.m.Text({ text: "{playerName}" }));
       colItemPlayer.addCell(new sap.m.Button({ icon: "sap-icon://navigation-up-arrow", press: function () { fiveCrowns.pageReorderController.onPlayerUp(this); } }));
       colItemPlayer.addCell(new sap.m.Button({ icon: "sap-icon://navigation-down-arrow", press: function () { fiveCrowns.pageReorderController.onPlayerDown(this); } }));
       // colItemPlayer.addCell(new sap.m.Input({ id: "idPlayerPosition", value: "{playerPosition}", change: function () { fiveCrowns.pageReorderController.onReorderChange(this) } }));
-      colItemPlayer.addCell(new sap.m.Text({ text: "{playerName}" }));
 
 
       tabReorder.bindAggregation("items", "/players", colItemPlayer);
@@ -66,25 +66,39 @@ fiveCrowns.pageReorderView = (function () {
 
 
 
-     // Add drag and drop
-     // This is missing animation of the field moving
-      tabReorder.attachBrowserEvent("touchstart", function (oEvent) {
-        const row = $(oEvent.target).closest("tr").get(0);
-        if (row) {
-          draggedElement = row;
-          // console.log("Dragging started on row:", row);
-        }
-      });
-      tabReorder.attachBrowserEvent("touchend", function (oEvent) {
-        const touch = oEvent.changedTouches[0];
-        const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
-        const targetRow = $(dropTarget).closest("tr").get(0);
-        if (targetRow && draggedElement) {
-          // console.log(`Dragged row from ${draggedElement.id} to ${targetRow.id}`);
-          fiveCrowns.pageReorderController.onDragAndDrop(draggedElement.id.split('-')[2], targetRow.id.split('-')[2])
-        }
-        draggedElement = null;  // Reset dragged element
-      });
+     // Add drag and drop with animation
+     let draggedElement = null;
+     tabReorder.attachBrowserEvent("touchstart", function (oEvent) {
+       const target = oEvent.target;
+       if (target.closest(".sapMText")) {
+         const row = $(target).closest("tr").get(0);
+         if (row) {
+           draggedElement = row;
+           $(draggedElement).addClass("dragging"); // Add dragging class for animation
+           // console.log("Dragging started on row:", row);
+         }
+       }
+     });
+     tabReorder.attachBrowserEvent("touchmove", function (oEvent) {
+       if (draggedElement) {
+         const touch = oEvent.touches[0];
+         $(draggedElement).css({
+           top: touch.pageY + 'px',
+           left: touch.pageX + 'px'
+         });
+       }
+     });
+     tabReorder.attachBrowserEvent("touchend", function (oEvent) {
+       const touch = oEvent.changedTouches[0];
+       const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+       const targetRow = $(dropTarget).closest("tr").get(0);
+       if (targetRow && draggedElement) {
+         // console.log(`Dragged row from ${draggedElement.id} to ${targetRow.id}`);
+         fiveCrowns.pageReorderController.onDragAndDrop(draggedElement.id.split('-')[2], targetRow.id.split('-')[2]);
+       }
+       $(draggedElement).removeClass("dragging"); // Remove dragging class after drop
+       draggedElement = null;  // Reset dragged element
+     });
 
 
 
@@ -104,4 +118,3 @@ fiveCrowns.pageReorderView = (function () {
   };
 
 }());
-
