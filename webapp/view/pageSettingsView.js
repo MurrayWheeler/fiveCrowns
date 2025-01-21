@@ -16,7 +16,6 @@ fiveCrowns.pageSettingsView = (function () {
 
       // Build menu button
       var menuItemBack = new sap.m.MenuItem({ icon: "sap-icon://nav-back", text: "Back", press: function () { fiveCrowns.pageSettingsController.onSettingsBack(oApp); } });
-
       var menuSettings = new sap.m.Menu({ items: [] });
       var menuButtonSettings = new sap.m.MenuButton({ icon: "sap-icon://menu2", menu: menuSettings });
 

@@ -48,7 +48,7 @@ fiveCrowns.games = (function () {
 
 
     function modifyGame(oGame) {
-        // Add new or modfiy existing game to list of games
+        // Add new, or modfiy, existing game to list of games
         // Look for existing
         var gameIndex = -1;
         for (var gameNum = 0; gameNum < oGames.game.length; gameNum++) {
@@ -59,15 +59,30 @@ fiveCrowns.games = (function () {
         // Use parse and stringify as assigning an object, assigns the object reference, rather thatn copying the values
         var oTempGame = JSON.parse(JSON.stringify(oGame));
         // Add or Modify
-        if (gameIndex == -1) {
-            // oGames.game.push(oTempGame);
-            // Insert at the front of the array. So the latest appears at the top of the list
-            oGames.game.unshift(oTempGame);
+        if (gameIndex == -1 && !isZeroScores(oGame)) {   // Check for zero scores, don't save a new game with all zero scores
+            oGames.game.unshift(oTempGame);              // Insert at the front of the array. So the latest appears at the top of the list
         } else {
             oGames.game[gameIndex] = oTempGame;
         }
-
     };
+
+
+    function isZeroScores(oGame) {
+        // Check if all scores are zero
+        var zeroScores = true;
+        for (var roundNum = 0; roundNum < oGame.scores.length; roundNum++) {
+            for (var playerNum = 0; playerNum < oGame.scores[roundNum].roundScores.length; playerNum++) {
+                if (oGame.scores[roundNum].roundScores[playerNum] != '') {
+                    zeroScores = false;
+                    break;
+                }
+            }
+            if (!zeroScores) {
+                break;
+            }
+        }
+        return zeroScores;
+    }
 
 
     function getNextGameId() {

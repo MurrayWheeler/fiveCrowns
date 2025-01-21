@@ -17,12 +17,12 @@ fiveCrowns.pageMainView = (function () {
       // Use popover (instead of sap.m.Menu), so it does not go to small screen on a mobile
       // var menuButtonNew = new sap.m.Button({ type: "Transparent", icon: "sap-icon://media-play", text: "New game", press: function () { fiveCrowns.pageMainController.onNewGame(oApp); } });
       // var menuButtonResume = new sap.m.Button({ type: "Transparent", icon: "sap-icon://restart", text: "Resume game", press: function () { fiveCrowns.pageMainController.onResumeGame(oApp); } });
-      var menuButtonList = new sap.m.Button({ type: "Transparent", icon: "sap-icon://list", text: "List games", press: function () { fiveCrowns.pageMainController.onListGames(oApp); } });
       var menuButtonSettings = new sap.m.Button({ type: "Transparent", icon: "sap-icon://action-settings", text: "Settings", press: function () { fiveCrowns.pageMainController.onSettings(oApp); } });
+      var menuButtonStatistics = new sap.m.Button({ type: "Transparent", icon: "sap-icon://database", text: "Statistics", press: function () { fiveCrowns.pageMainController.onStatistics(oApp); } });
       var menuButtonHelp = new sap.m.Button({ type: "Transparent", icon: "sap-icon://sys-help", text: "Help", press: function () { fiveCrowns.pageMainController.onHelp(oApp); } });
       var menuButtonInstr = new sap.m.Button({ type: "Transparent", icon: "sap-icon://learning-assistant", text: "Instructions", press: function () { fiveCrowns.pageMainController.onInstr(oApp); } });
       var menuButtonAbout = new sap.m.Button({ type: "Transparent", icon: "sap-icon://hint", text: "About", press: function () { fiveCrowns.pageMainController.onAbout(oApp); } });
-      var vboxMenu = new sap.m.VBox({ items: [menuButtonSettings, menuButtonInstr, menuButtonAbout] });
+      var vboxMenu = new sap.m.VBox({ items: [menuButtonSettings, menuButtonStatistics, menuButtonInstr, menuButtonAbout] });
       var popoverMain = new sap.m.Popover({ id:"popoverMain", title: "Options", placement: sap.m.PlacementType.Bottom, content: [vboxMenu] });
       var menuButtonMain = new sap.m.Button({ icon: "sap-icon://menu2", press: function (oEvent) { popoverMain.openBy(menuButtonMain); } });
 

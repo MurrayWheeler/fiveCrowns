@@ -25,7 +25,6 @@ fiveCrowns.pageMainController = (function () {
     function gotoList(oApp) {
         requestFullScreen();
         tabGames.getModel().setData(fiveCrowns.games.getModel());
-        // tabGames.getModel().refresh();
         oApp.to("pageGames", fiveCrowns.settings.oSettings.getPageTransition());
     };
 
@@ -38,7 +37,6 @@ fiveCrowns.pageMainController = (function () {
 
         onPlayButton: function (oApp) {
             fiveCrowns.model.clearScores();
-            // fiveCrowns.model.clearPlayers();   // Use the previously used player names
             fiveCrowns.model.setPlayerCount(playerCount.getValue());   // Get player count from screen
             fiveCrowns.model.newGame();
             fiveCrowns.pageGameController.setGameEditable(true);
@@ -60,19 +58,17 @@ fiveCrowns.pageMainController = (function () {
             oApp.to("pageSettings", fiveCrowns.settings.oSettings.getPageTransition());
         },
 
+        onStatistics: function (oApp) {
+            requestFullScreen();
+            sap.ui.getCore().byId("popoverMain").close()
+            fiveCrowns.statistics.loadStatistics();
+            oApp.to("pageStatistics", fiveCrowns.settings.oSettings.getPageTransition());
+        },
+
         onAbout: function (oApp) {
             requestFullScreen();
             sap.ui.getCore().byId("popoverMain").close()
-            sap.m.MessageToast.show("Five Crowns v0.01 (Beta)");
-            // Popover? or page?
-            // oApp.to("pageAbout", fiveCrowns.settings.oSettings.getPageTransition());
-        },
-
-        onHelp: function (oApp) {
-            requestFullScreen();
-            sap.ui.getCore().byId("popoverMain").close()
-            sap.m.MessageToast.show("Help is not yet available");
-            // oApp.to("pageHelp", fiveCrowns.settings.oSettings.getPageTransition());
+            sap.m.MessageToast.show("Five Crowns\nv1.00.00 (First release)\nDeveloped by:\nMurray Wheeler");
         },
 
         onInstr: function (oApp) {

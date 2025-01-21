@@ -364,15 +364,6 @@ fiveCrowns.model = (function () {
         },
 
 
-        clearPlayers: function () {
-            for (let playerNum = 0; playerNum < maxPlayers; playerNum++) {
-                oGame.players[playerNum].playerId = 0;
-                oGame.players[playerNum].playerName = "";
-                // oGame.players[playerNum].playerName = defaultPlayerName(playerNum);
-                oGame.players[playerNum].playerScores = ''; // this is wrong
-            }
-        },
-
         updateTotals: function () {
             clearTotals();
             for (let roundNum = 0; roundNum < maxRounds; roundNum++) {
